@@ -1,0 +1,4 @@
+.Rproj.user
+resources/external/*
+htdocs/results/*
+htdocs/uploads/*
