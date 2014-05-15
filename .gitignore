@@ -1,7 +1,7 @@
 .Rproj.user
 resources/external/*
-htdocs/results/*
-htdocs/uploads/*
+htdocs/results/*/*
+htdocs/uploads/*/*
 !htdocs/results/placeholder.txt
 !htdocs/uploads/placeholder.txt
 !resources/external/placeholder.txt
