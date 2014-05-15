@@ -40,7 +40,7 @@ if (!$genefile){
 
 #upload file
 my $safe_filename_characters = "a-zA-Z0-9_.-"; 
-my $upload_dir = "../htdocs/Uploads";
+my $upload_dir = "../htdocs/uploads";
 my ( $name, $path, $extension ) = fileparse ( $genefile, '\..*' );
 	$genefile = $name . $extension;
 	$genefile =~ tr/ /_/;
