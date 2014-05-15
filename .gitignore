@@ -2,3 +2,4 @@
 resources/external/*
 htdocs/results/*
 htdocs/uploads/*
+!placeholder.txt
