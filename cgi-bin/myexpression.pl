@@ -49,7 +49,7 @@ print start_html(
 
 print '<body>';
 
-my $Enrichment_CMD = "R  --vanilla   --args $id $idtype $subtype $user_result_dir< ../resources/scripts/BRCADB_2013_plotexprsfxn_perl.R ";
+my $Enrichment_CMD = "R  --vanilla --slave --args $id $idtype $subtype $user_result_dir< ../resources/scripts/BRCADB_2013_plotexprsfxn_perl.R ";
 
 ###Wait feature here
 print'<div id="cgicontainer">';
@@ -59,8 +59,8 @@ print "<p>  Generating Data Now...</p>";
 
 print'</div>';
 print'</div>';
-print'<script src="/assets/spinjs/Spin.js" type="text/javascript"></script>';
-print'<script src="/assets/spinjs/spinneropts.js" type="text/javascript"></script>';
+print'<script src="../assets/spinjs/Spin.js" type="text/javascript"></script>';
+print'<script src="../assets/spinjs/spinneropts.js" type="text/javascript"></script>';
 print'<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>';
 
 system($Enrichment_CMD);
