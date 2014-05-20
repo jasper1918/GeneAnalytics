@@ -64,8 +64,8 @@ print'<script src="../assets/spinjs/spinneropts.js" type="text/javascript"></scr
 print'<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>';
 
 system($Enrichment_CMD);
-print '<script type="text/javascript">$("#spindiv").hide(500);</script>';
-print '<script type="text/javascript">$("#overlay").hide(500);</script>';
+#print '<script type="text/javascript">$("#spindiv").hide(500);</script>';
+#print '<script type="text/javascript">$("#overlay").hide(500);</script>';
 ##zip the files
    my $zip = Archive::Zip->new();
    
