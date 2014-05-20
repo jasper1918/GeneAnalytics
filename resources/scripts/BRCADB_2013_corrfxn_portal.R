@@ -1,13 +1,8 @@
-id="foxa1"
-idtype="symbol"
-subtype="PAM50"
-enrich="yes"
-results_dir="/Volumes/Data/Git_Repos/GeneAnalytics/htdocs/results/204667_at_152.16.218.176_1400102103"
-dir.create(results_dir)
+
 docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2"),enrich=c("yes","no"),results_dir) {
   load("../resources/external/BRCADB_final_2013_Data.RData")
-  suppressPackageStartupMessages(library(WGCNA))
-  allowWGCNAThreads(8)
+  #suppressPackageStartupMessages(library(WGCNA))
+  #allowWGCNAThreads(8)
   clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T)
   idtype <- match.arg(idtype)
   subtype <- match.arg(subtype)

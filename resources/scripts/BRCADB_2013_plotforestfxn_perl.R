@@ -10,7 +10,5 @@ mychemo<-args[7]
 mysurv<-args[8]
 mydir<-args[9]
 
-#cat( "Found the R-perl bridge")
 source("../resources/scripts/BRCADB_2013_plotforestfxn2_portal.R")
-#cat("found the source file")
 plotforest(mysigfile=myforestfile, signame=myforestname, idtype=myidtype, metric=mymetric,chemo=mychemo, tam=mytam, subtype=mysubtype,surv_type=mysurv, results_dir=mydir)

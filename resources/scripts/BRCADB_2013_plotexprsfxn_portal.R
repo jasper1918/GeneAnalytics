@@ -1,6 +1,5 @@
-cat("found the file")
+
 plotexpr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2", "ALL"),results_dir){
-cat("Inside the file")
   ###validation and data prep----
   idtype <- match.arg(idtype)
   subtype <- match.arg(subtype)

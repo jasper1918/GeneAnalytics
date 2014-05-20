@@ -1,4 +1,3 @@
-#results_dir<-"/Volumes/Data/Git_Repos/GeneAnalytics/htdocs/results/foxa1_152.16.218.176_1400104171"
 
 plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("hr", "ci"),chemo=c("any","yes", "no"), tam=c("any","yes","no","compare"), subtype=c("basal", "luma", "lumb", "her2", "normal"),surv_type=c("rfs","dmfs","combo"), results_dir){
   
