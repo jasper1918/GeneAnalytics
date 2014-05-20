@@ -59,8 +59,8 @@ print "<p>  Generating Data Now...</p>";
 
 print'</div>';
 print'</div>';
-print'<script src="../assets/spinjs/spin.js" type="text/javascript"></script>';
-print'<script src="../assets/spinjs/spinneropts.js" type="text/javascript"></script>';
+print'<script src="/home/primerbot/mygit/gene_analytics/htdocs/assets/spinjs/spin.js" type="text/javascript"></script>';
+print'<script src="/home/primerbot/mygit/gene_analytics/htdocs/assets/spinjs/spinneropts.js" type="text/javascript"></script>';
 print'<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>';
 
 system($Enrichment_CMD);
