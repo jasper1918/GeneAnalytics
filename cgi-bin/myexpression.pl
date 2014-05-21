@@ -12,7 +12,7 @@ my $start_time = time();
 my $RESULT_DIR = "../htdocs/results";
 
 my $query = new CGI;
-
+$| = 1; 
 ###get file info from user=
 my $id = $query->param("Identifier");
 my $idtype= $query->param("Idtype");
