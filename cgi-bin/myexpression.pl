@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-
+$| = 1; 
 use CGI qw(:standard);
 use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
 use strict;
@@ -12,7 +12,7 @@ my $start_time = time();
 my $RESULT_DIR = "../htdocs/results";
 
 my $query = new CGI;
-$| = 1; 
+
 ###get file info from user=
 my $id = $query->param("Identifier");
 my $idtype= $query->param("Idtype");
@@ -39,7 +39,7 @@ if (! -e $user_result_dir) {
     chmod (0777, $user_result_dir); 
 }
 
-print $query->header ( "text/html");
+print $query->header ( "text/html",'200 OK');
 print start_html(
         -title   => 'Results',
         -author  => 'jasper1918@gmail.com',
