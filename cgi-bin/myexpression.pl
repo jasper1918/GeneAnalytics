@@ -77,7 +77,7 @@ print '<script type="text/javascript">$("#overlay").hide(500);</script>';
        die 'write error';
    }
    
-print '<script type="text/javascript"> spin_stop();</script>';
+#print '<script type="text/javascript"> spin_stop();</script>';
 print "<p> Results Complete! </p>";
 my $end_time = time();
 my $total_time = ($end_time - $start_time);
