@@ -13,4 +13,6 @@ http://labs.genetics.ucla.edu/horvath/CoexpressionNetwork/Rpackages/WGCNA/index.
   download source and delete text in zzz.R in R
   package as tar -zcvf WGCNA_m.tar.gz WGCNA-1
 install.packages("WGCNA_m.tar.gz",repos = NULL, type="source")
+#remove WGCNA, not much of a speed gain afterall.
+
 
