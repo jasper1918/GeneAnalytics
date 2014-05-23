@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-$| = 1; 
 use CGI qw(:standard);
 use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
 use strict;
@@ -49,7 +48,7 @@ print start_html(
 
 print '<body>';
 
-my $Enrichment_CMD = "R  --vanilla --slave --args $id $idtype $subtype $user_result_dir< ../resources/scripts/BRCADB_2013_plotexprsfxn_perl.R ";
+my $Enrichment_CMD = "R  --vanilla  --slave --args $id $idtype $subtype $user_result_dir< ../resources/scripts/BRCADB_2013_plotexprsfxn_perl.R ";
 
 ###Wait feature here
 print'<div id="cgicontainer">';

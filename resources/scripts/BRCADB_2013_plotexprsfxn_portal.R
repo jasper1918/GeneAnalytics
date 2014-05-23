@@ -1,4 +1,10 @@
-
+#id="notch1"
+#idtype="symbol"
+#subtype="PAM50"
+#results_dir<-"/home/jasper1918/mygit/gene_analytics/htdocs/results/test"
+#dir.create(results_dir)
+#setwd("~/mygit/gene_analytics/cgi-bin")
+#plotexpr(id, idtype,subtype, results_dir)
 plotexpr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2", "ALL"),results_dir){
   ###validation and data prep----
   idtype <- match.arg(idtype)

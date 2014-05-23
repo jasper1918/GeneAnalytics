@@ -1,3 +1,11 @@
+#mysigfile="ERRA_CL3_sym.txt"
+#signame="test_heat"
+#idtype="symbol"
+#subtype="PAM50"
+#results_dir<-"/home/jasper1918/mygit/gene_analytics/htdocs/results/test2"
+#dir.create(results_dir)
+#setwd("~/mygit/gene_analytics/cgi-bin")
+#plotheatmap(mysigfile,signame, idtype,subtype, results_dir)
 plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c("PAM50", "MOD1", "MOD2"), results_dir){
   
   #validation
