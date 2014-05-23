@@ -14,7 +14,10 @@ http://labs.genetics.ucla.edu/horvath/CoexpressionNetwork/Rpackages/WGCNA/index.
   package as tar -zcvf WGCNA_m.tar.gz WGCNA-1
 install.packages("WGCNA_m.tar.gz",repos = NULL, type="source")
 #remove WGCNA, not much of a speed gain afterall.
-#test lines
+#test line
+#test2
+#test
+
 
 
 
