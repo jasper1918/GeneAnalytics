@@ -7,3 +7,4 @@ mydir<-args[4]
 cat ("found the R-perl file")
 source("../resources/scripts/BRCADB_2013_plotexprsfxn_portal.R")
 plotexpr(id=myid, idtype=myidtype, subtype=mysubtype, results_dir=mydir)
+#test
