@@ -12,7 +12,7 @@ my $RESULT_DIR = "../htdocs/results";
 
 my $query = new CGI;
 
-###get file info from user=
+###get file info from user
 my $id = $query->param("Identifier");
 my $idtype= $query->param("Idtype");
 my $subtype= $query->param("Subtype");
@@ -63,8 +63,8 @@ print'<script src="../assets/spinjs/spinneropts.js" type="text/javascript"></scr
 print'<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>';
 
 system($Enrichment_CMD);
-#print '<script type="text/javascript">$("#spindiv").hide(500);</script>';
-#print '<script type="text/javascript">$("#overlay").hide(500);</script>';
+print '<script type="text/javascript">$("#spindiv").hide(500);</script>';
+print '<script type="text/javascript">$("#overlay").hide(500);</script>';
 ##zip the files
    my $zip = Archive::Zip->new();
    
@@ -76,7 +76,7 @@ system($Enrichment_CMD);
        die 'write error';
    }
    
-#print '<script type="text/javascript"> spin_stop();</script>';
+print '<script type="text/javascript"> spin_stop();</script>';
 print "<p> Results Complete! </p>";
 my $end_time = time();
 my $total_time = ($end_time - $start_time);
