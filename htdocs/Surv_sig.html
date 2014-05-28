@@ -78,7 +78,7 @@
                     <li class="function_menu">
                         <a href="Surv.html">
                             <i class="icon-minus"></i>
-                            <span>Single Gene Survival</span>
+                            <span>Gene Survival</span>
                         </a>
                     </li>
 
@@ -189,6 +189,7 @@
                                             </label>
                                             <label class="radio" for="IDType-1">
                                                 <input type="radio" name="Idtype" value="symbol" id="idsymbol" />Gene Symbol
+                                                <i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Choosing Symbol will automatically identify the best available probe."></i>
                                             </label>
                                         </div>
                                     </div>
@@ -197,7 +198,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 col-sm-2 control-label" for="textinput">File</label>
                                         <div class="col-lg-9">
-                                            <input type="file" name="datafile" size="10" id="inputfile">
+                                            <input type="file" name="datafile" size="10" id="inputfile"><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Text file with first column gene id, second either 1 or -1"></i>
                                         </div>
                                     </div>
 
@@ -205,7 +206,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 col-sm-2 control-label" for="textinput">Label</label>
                                         <div class="col-lg-9">
-                                            <input name="mylabel" type="text" value="" size="15" maxlength="20" id="mylabel" />
+                                            <input name="mylabel" type="text" value="" size="15" maxlength="20" id="mylabel" /><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Label to use for plot"></i>
 
                                         </div>
                                     </div>
@@ -215,7 +216,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 col-sm-2 control-label" for="MONTHS">Months</label>
                                         <div class="col-lg-9">
-                                            <input name="survmonths" type="number" class="spinner" id="months" value="250" data-type="input-spinner" min="1" max="350" />
+                                            <input name="survmonths" type="number" class="spinner" id="months" value="250" data-type="input-spinner" min="1" max="350" /><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Number of months to plot"></i>
                                         </div>
                                     </div>
 
@@ -231,7 +232,7 @@
 
                                                 <option value="MOD2">MOD2</option>
 
-                                            </select>
+                                            </select><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Molecular Subtype classifying algorithm to use"></i>
                                         </div>
                                     </div>
 
@@ -247,7 +248,7 @@
 
                                                 <option value="quartile">Quartile</option>
 
-                                            </select>
+                                            </select><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Data will be split into low and high classifications with only the most upper and lower of each split type"></i>
                                         </div>
                                     </div>
 
@@ -265,7 +266,7 @@
 
                                                 <option value="compare">Compare</option>
 
-                                            </select>
+                                            </select><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Whether to include patients treated with tamoxifen or to compare across the treatment itself"></i>
                                         </div>
                                     </div>
 
@@ -281,7 +282,7 @@
 
                                                 <option value="no">No</option>
 
-                                            </select>
+                                            </select><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Whether to include patients treated with chemo"></i>
                                         </div>
                                     </div>
 
@@ -297,7 +298,7 @@
 
                                                 <option value="combo">RFS/DMFS</option>
 
-                                            </select>
+                                            </select><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="The criteria for end point: RFS-Relapse Free Survival, DMFS-Distant Metastasis Free Survival, or combined"></i>
                                         </div>
                                     </div>
 
@@ -326,98 +327,144 @@
                 </div>
                 <!--row end -->
                 <div class="row">
-                    <div class="col-lg-9 col-lg-offset-1">
+                    <div class="col-lg-10 col-lg-offset-1">
                         <section class="panel">
                             <div class="panel-body">
-                                <h4>Kaplan-Meier Survival curves for a single gene of interest.</h4>
+                                <h3>Kaplan-Meier Survival Curves for a Gene-Set</h3>
+                                <hr>
                                 <ul>
-                                    <p>
-                                        <strong>This program uses a tab-delimited text file (.txt) with the first column containing NCBI Accessions.</strong>
-                                    </p>
-                                    <ul>
-                                        <li>If using a MAC, use Excel and save the file as Windows Formatted Text (.txt).</li>
-                                        <ul>
-                                            <li>Here is an example file: <a href="http://primerbot.duhs.duke.edu/PrimerBot/files/mrna_example.bed"> mRNA-File.txt </a> 
-                                                <small>(Right click, Save As)</small>
+                                    <li>
+                                        <strong>Survival Analysis</strong>
+                                        <ol style="list-style: none; ">
+                                            <li>This program produces KM curves for a gene-set and metaplot for each subtype.
                                             </li>
-                                        </ul>
-
-                                        <li>Valid <a href="http://www.ncbi.nlm.nih.gov/RefSeq/key.html#accession"> Genbanks Accessions</a> include those for transcripts and non-coding RNA(NM, NR, XM, XR, AA).</li>
-                                        <li>Human Reference:
-                                            <ul>
-                                                <li>Human<a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz"> Gene-Symbols</a> to RefSeq.</li>
-                                                <li>Human<a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/knownToRefSeq.txt.gz"> UCSC</a> to RefSeq.</li>
-                                                <li>Human<a href="http://primerbot.duhs.duke.edu/PrimerBot/files/Ensembl_Refseq_human.txt"> Ensembl</a> to RefSeq.</li>
-                                            </ul>
-                                            <li>Mouse Reference:
-                                                <ul>
-                                                    <li>Mouse<a href="http://hgdownload.cse.ucsc.edu/goldenPath/mm10/database/refFlat.txt.gz"> Gene-Symbols</a> to RefSeq.</li>
-                                                    <li>Mouse<a href="http://hgdownload.cse.ucsc.edu/goldenPath/mm10/database/knownToRefSeq.txt.gz"> UCSC</a> to RefSeq.</li>
-                                                    <li>Mouse<a href="http://primerbot.duhs.duke.edu/PrimerBot/files/Ensembl_Refseq_mouse.txt"> Ensembl</a> to RefSeq.</li>
-                                                </ul>
-                                    </ul>
-                                    <p>
-                                        <p>
-                                            <strong>There are three different primer design types to accomodate a wide range of uses.</strong>
-                                        </p>
-                                        <ol>
-                                            <li>
-                                                <strong>Span Exon-Exon Junctions</strong>
-                                            </li>
-                                            <ul style="list-style: none; ">
-                                                <li>Ideally qPCR primers are designed to amplify across exon-exon junctions to minimize amplification of genomic DNA by virtue of its size. Even more ideal would be to design the primer to sit across the exon-exon junction so it would be unable to prime the genomic sequence of the transcript at all. This design style annotates the coding regions and exon junctions of the transcripts to assure that at a minimum junctions are spanned.</li>
-                                            </ul>
-                                            <li>
-                                                <strong>Amplify 3'UTR</strong>
-                                            </li>
-                                            <ul style="list-style: none; ">
-                                                <li>In the case where one wishes to specifically amplify the endogenous mRNA during an overexpression study. Also, many gene isoforms share a common 3'UTR making this an ideal region to co-amplify all isoforms simultaneously.</li>
-                                            </ul>
-
-                                            <li>
-                                                <strong>No-Span</strong>
-                                            </li>
-                                            <ul style="list-style: none; ">
-                                                <li>This style does not use the exon features for primer picking and serves as a fail-safe.</li>
-                                            </ul>
                                         </ol>
-                                        <p>
-                                            <p>Following submission, the results are printed in the webpage with a link to download all the information to an Excel sheet. Gene annotations and other primer properties are all included for good bookeeping. Each primer-pair is also linked to the <a href="http://genome.ucsc.edu/cgi-bin/hgPcr?command=start">In-SilicoPCR</a> database to ensure your products amplify your gene of interest and do not cross amplify other transcripts.</p>
+                                    </li>
+                                    <li>
+                                        <strong>Parameters</strong>
+                                        <ol>
+                                            <li style="list-style: none; ">
+                                                <strong>Id Type/Identifier</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>Enter a valid HGU133A probeset (2046224_at) or a HUGO gene symbol. If a gene symbol is entered the best available probeset will be identified using jetset<a href="link here"> Add link</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>File</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>Text file with the first column containing the gene ids (Affy or Gene Symbol) and the second column indicating a positive effect (1) or a negative effect (-1) on the gene-set for each id. See this<a href="assets/GO_0046605_Symbol.txt"> Example</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>Months</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>The number of months to plot. This parameter does not currenlty alter the months for significance testing.</li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>Subtype</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>Survival plots will be generated for each tumor subtype from the chose algorithm.</li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>Split</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>Tamoxifen</strong>>
+                                                <ul style="list-style: none; ">
+                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>Chemo</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>End Point</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                </ul>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li>
+                                        <strong>Data Output</strong>
+                                        <ol>
+                                            <li style="list-style: none; ">Following submission, the results are printed in the webpage with a link to download all the relevent data and plots as a zip file. All plots are generated as PDFs to ensure high quality for publication purposes.Generated data include:
+                                                <ol>
+                                                    <li style="list-style: decimal; ">KM curves for each subtype</li>
+                                                    <li style="list-style: decimal; ">Forest plots for each subtype</li>
+                                                    <li style="list-style: decimal; ">All gene expression and associated clinical data</li>
+                                                </ol>
+                                            </li>
+                                        </ol>
                                 </ul>
+                                <div class="col-lg-12">
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            <strong>Example Kaplan-Meier Curve</strong>
+
+                                        </header>
+                                        <div class="panel-body" style="display: block;">
+
+                                            <img src="assets/pics/myplots/GO_0046605_PAM50_any_any_median_Overall_Survival.jpg" width="600" height="354"></img>
+
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-lg-12">
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            <strong>Example Forest Plot</strong>
+                                        </header>
+                                        <div class="panel-body" style="display: block;">
+
+                                            <img src="assets/pics/myplots/GO_0046605_PAM50_any_any_median_combo_Overall_cindex.jpg" width="1256" height="708"></img>
+
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
                         </section>
                     </div>
                 </div>
+                <!--wrapper end-->
+                <!-- InstanceEndEditable -->
+                <!--main content end-->
+                <!--footer start-->
+                <footer class="site-footer">
+                    <div class="text-center">
+                        2013 &copy; Gene Analytics | Duke University | McDonnell Lab | Jeff Jasper | Jasper1918@gmail.com
+                        <a href="#" class="go-top">
+                            <i class="icon-angle-up"></i>
+                        </a>
+                    </div>
+                </footer>
+                <!--footer end-->
             </section>
-            <!--wrapper end-->
-            <!-- InstanceEndEditable -->
-            <!--main content end-->
-            <!--footer start-->
-            <footer class="site-footer">
-                <div class="text-center">
-                    2013 &copy; Gene Analytics | Duke University | McDonnell Lab | Jeff Jasper | Jasper1918@gmail.com
-                    <a href="#" class="go-top">
-                        <i class="icon-angle-up"></i>
-                    </a>
-                </div>
-            </footer>
-            <!--footer end-->
-        </section>
-        <!-- main-content end -->
+            <!-- main-content end -->
 
-        <!-- js placed at the end of the document so the pages load faster -->
+            <!-- js placed at the end of the document so the pages load faster -->
 
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="assets/js/jquery.scrollTo.min.js"></script>
-        <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-        <script src="assets/js/respond.min.js"></script>
+            <script src="assets/js/bootstrap.min.js"></script>
+            <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+            <script src="assets/js/jquery.scrollTo.min.js"></script>
+            <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+            <script src="assets/js/respond.min.js"></script>
 
-        <!--common script for all pages-->
-        <script src="assets/js/common-scripts.js"></script>
+            <!--common script for all pages-->
+            <script src="assets/js/common-scripts.js"></script>
 
-        <!--script for this page only-->
-        <script src="assets/js/gritter.js" type="text/javascript"></script>
+            <!--script for this page only-->
+            <script src="assets/js/gritter.js" type="text/javascript"></script>
 
 
 </body>
