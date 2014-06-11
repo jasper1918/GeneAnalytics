@@ -1,6 +1,12 @@
-plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subtype=c("PAM50", "MOD1", "MOD2", "ALL"), chemo=c("any","yes", "no"), tam=c("any","yes","no","compare"),split=c("median","tertile", "quartile"),surv_type=c("rfs","dmfs","combo"),results_dir){
 
-  #validation
+plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subtype=c("PAM50", "MOD1", "MOD2", "ALL"), chemo=c("any","yes", "no"), tam=c("any","yes","no","compare"),split=c("median","tertile", "quartile"),surv_type=c("rfs","dmfs","combo"),results_dir){
+#Function to plot Kaplan-Meier curve with a gene-set. 
+#Extracts gene symbols or affy probe-sets from a tab delim txt file. 
+#patients classified with either PAM50 or MOD.
+#filter on treatment:chemo and/or tam.
+#Jeff S Jasper, jasper1918@gmail.com
+  
+  #validate args
   idtype <- match.arg(idtype)
   chemo <- match.arg(chemo)
   tam <- match.arg(tam)
@@ -11,7 +17,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   surv_type<-match.arg(surv_type)
   months<-as.numeric(months)
   
-  #get file
+  #load input file with ids
   mysigfileloc<-paste("../htdocs/uploads","/", mysigfile, sep="")
   mysigfiledn<-read.table(mysigfileloc, sep="\t", header=F)
   
@@ -27,7 +33,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   
   #get identifiers, validate, inform if missing
   if (!exists("sigsymbols") & exists("sigprobes")){
-    library(hgu133a.db)
+    require(hgu133a.db)
     sigsymbols_map = unlist(mget(sigprobes, hgu133aSYMBOL,ifnotfound=NA))
     sigpmissing<-subset(sigsymbols_map,is.na(sigsymbols_map))
     
@@ -38,7 +44,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
     myidann<-data.frame(names(sigann), sigann)
   }
   if (!exists("sigprobes") & exists("sigsymbols")){
-    library(jetset)
+    require(jetset)
     sigsymbols<- toupper(sigsymbols)
     sigprobes_map<-(jmap('hgu133a', symbol = sigsymbols))
     sigsmissing<-subset(sigprobes_map,is.na(sigprobes_map))
@@ -50,27 +56,29 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
     myidann<-data.frame(sigann, names(sigann))
   }
   
-  ###load data using from sql
-  clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T) 
+  #attach libraries
+  require(ggplot2)
+  require(survival)
+  require(RSQLite)
+  require(rmeta)
   
-  library(ggplot2)
-  library(survival)
-  library(RSQLite)
-  library(rmeta)
+  
+  #load patient data from sql
+  clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T) 
   
   drv <- dbDriver("SQLite")
   con <- dbConnect(drv, dbname="../resources/external/BRCADB_final_2013.sqlite")
-  dbListTables(con)
+  #dbListTables(con)
   probesql<-paste("'",as.character(myidann[,1]),"'",collapse=", ",sep="")
   myquery<-paste("SELECT * FROM BRCADB WHERE row_names IN (",probesql,")" ,sep="")
   gene<-dbGetQuery(con,myquery)
   gene<-data.frame(gene, row.names=1)
   gene<-as.data.frame(gene)
   
-  ###genefu to get sigscores
-  library("genefu")
+  #genefu to get sigscores
+  require("genefu")
   
-  ###get sigfile
+  #get sigfile
   if (idtype=="symbol"){
     mysigfiledn[,1]<-toupper(mysigfiledn[,1])
     newsigfile<-merge(mysigfiledn, myidann, by.x=1, by.y=2)
@@ -79,7 +87,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
     colnames(newsigfile)<-c("symbol", "coefficient", "probe")
     newsigfile$EntrezGene.ID<-"ent"
   }
-  ###if probes
+  #if probes
   if( idtype=="probe"){
     newsigfile<-merge(mysigfiledn, myidann, by.x=1, by.y=1)
     newsigfile<-unique(newsigfile)
@@ -129,7 +137,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
 
   colnames(myset)[2]<-signame
   
-  ###get ready to plot-------
+  #get ready to plot-------
   basedir<-results_dir
   mydir<-paste(basedir,"/", signame, "-","sig_survival",sep="")
   dir.create(mydir)
@@ -185,7 +193,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
 
   write.table(myset, paste("all-myset.txt", sep=""), sep="\t", col.names=NA)
   
-  ###Plot overall-----------
+  #Plot overall-----------
   medinf<-NULL
   mytext<-NULL
   myinf<-NULL
@@ -221,7 +229,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   #colnames(myinf)<-c("Samples","Events", "median", "0.95LCL", "0.95UCL")
   dev.off()
   
-  ###forestplots--
+  #forestplots--
   myGSEIDS<-as.character(unique(mysetk$GSE))
   
   rescale <- function(x, na.rm=FALSE, q=0.05) {
@@ -248,8 +256,8 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
     mysetpts[j]<-dim(myeset[[j]])[[1]]
   }
   
-  ###get data into usable format
-  library(abind)
+  #get data into usable format for metaplot
+  require(abind)
   j<-abind(hratio,along=1)
   mysetindex<-rep(myGSEIDS, each=2)
   mygeneindex<-rep(1:2,times=length(myGSEIDS))
@@ -260,7 +268,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   myhrdf$no<-mysetpts
   myhrdf<-na.omit(myhrdf)
   
-  ###forestplot
+  #metaplot
   myspace <- " "
   mybigspace <- "    "
   labeltext <- cbind(c("Dataset",paste(myhrdf$set, ", N=", myhrdf$no, sep="")),c(rep(mybigspace,length(myhrdf$set)+1)))
@@ -275,7 +283,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
                   col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs ) #clip=c(0,1)
   dev.off()
   
-  ###plot by subtype ---------
+  #plot by subtype ---------
   mysetk<-NULL
   mysetkm<-NULL
   mycoxkm<-NULL
@@ -293,7 +301,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
     mysetk[[i]] <- within(mysetk[[i]], datasplit <- as.integer(cut(mysetk[[i]][,2], quantile(mysetk[[i]][,2], probs=0:mysplit/mysplit), include.lowest=TRUE)))
     mysetkm[[i]] <- subset(mysetk[[i]], datasplit %in% mykeep)
     
-    ###need a failsafe if not enough records
+    #need a failsafe if not enough records
     table(mysetkm[[i]]$MYSURV_Event,mysetkm[[i]]$datasplit)
     write.table(mysetkm[[i]], paste( paste(subtypename[i], "-myset.txt",sep=""), sep=""), sep="\t", col.names=NA)
     
@@ -346,7 +354,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
       dev.off()
     }
     
-    ###forestplots---
+    #metaplots---
     myGSEdf<-data.frame(table(mysetkm[[i]]$MYSURV_Event,mysetkm[[i]]$GSE))
     myGSEdf<-subset(myGSEdf, myGSEdf[,1]==1 & myGSEdf[,3] >= 1)
     myGSEIDS<-as.character(unique(myGSEdf[,2]))
@@ -375,8 +383,8 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
       mysetpts[j]<-dim(myeset[[j]])[[1]]
     }
     
-    ###get data into usable format
-    library(abind)
+    #get data into usable format for metaplot
+    require(abind)
     j<-abind(hratio,along=1)
     mysetindex<-rep(myGSEIDS, each=2)
     mygeneindex<-rep(1:2,times=length(myGSEIDS))
@@ -387,7 +395,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
     myhrdf$no<-mysetpts
     myhrdf<-na.omit(myhrdf)
     
-    ###forestplot
+    #metaplot
     if(dim(myhrdf)[[1]]>1){
       myspace <- " "
       mybigspace <- "    "
@@ -404,7 +412,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
       dev.off()
     }
   }
-  ###plotexpresssion-------------
+  #plotexpresssion-------------
   basekm<- ggplot(myset, aes(myset[,myrow], myset[,2]), environment=environment())
   basekmbox<-basekm +geom_boxplot(aes(fill = factor(myset[,myrow])), alpha=1)+scale_colour_brewer(palette="Set1")+scale_fill_hue(c=150, l=45)
   myplotkmbox<- basekmbox+ labs(fill= "",title="", x= "", y= "Log2 Expression")
