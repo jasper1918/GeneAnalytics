@@ -4,7 +4,6 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
 	#patients classified with either PAM50 or MOD.
 	#filter on treatment:chemo and/or tam.
 	#Jeff S Jasper, jasper1918@gmail.com
-  cat("0")
   
   #validate args
   idtype <- match.arg(idtype)
@@ -16,8 +15,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   split<-match.arg(split)
   surv_type<-match.arg(surv_type)
   months<-as.numeric(months)
-  
-  cat ("1")
+
   #load input file with ids
   mysigfileloc<-paste("../htdocs/uploads","/", mysigfile, sep="")
   mysigfiledn<-read.table(mysigfileloc, sep="\t", header=F)
@@ -60,7 +58,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
     sigann<-subset(sigprobes_map,!is.na(sigprobes_map))
     myidann<-data.frame(sigann, names(sigann))
   }
-  cat ("2")
+  
   #attach libraries
   require(ggplot2)
   require(survival)
@@ -79,7 +77,6 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   gene<-data.frame(gene, row.names=1)
   gene<-as.data.frame(gene)
   
-  cat ("3")
   #genefu to get sigscores
   require("genefu")
   
@@ -112,7 +109,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   myscores<-SigScores(data=t(gene), annot=dummy, do.mapping=FALSE, verbose=TRUE)
   
   myset<-merge((myscores), clin, by.x=0, by.y=2)
-  cat ("4")
+  
   ##subset treatments
   if(exists("chemo")){
     
@@ -141,7 +138,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   }
 
   colnames(myset)[2]<-signame
-  cat ("5")
+
   #get ready to plot-------
   basedir<-results_dir
   mydir<-paste(basedir,"/", signame, "-","sig_survival",sep="")
@@ -170,7 +167,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   if (split=='quartile') {
     mysplit=4
     mykeep<-c('1','4')}
-  cat ("6")
+
   #get index of survival type
   if (surv_type=='rfs') {
     mysurv_event=16
@@ -197,7 +194,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   subtypename<-gsub(" ", "-", subtypename)
 
   write.table(myset, paste("all-myset.txt", sep=""), sep="\t", col.names=NA)
-  cat ("7")
+
   #Plot overall-----------
   medinf<-NULL
   mytext<-NULL
@@ -233,7 +230,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   #myinf<-medinf[,c(1,4,5,6,7)]
   #colnames(myinf)<-c("Samples","Events", "median", "0.95LCL", "0.95UCL")
   dev.off()
-  cat ("8")
+ 
   #forestplots--
   myGSEIDS<-as.character(unique(mysetk$GSE))
   
@@ -287,7 +284,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
                   align=c("l"), graphwidth=unit(1.5, "inches"), x.ticks=seq(0,1,0.25), xlab=paste( "Concordance Index", myspace, sep=""),
                   col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs ) #clip=c(0,1)
   dev.off()
-  cat ("9")
+  
   #plot by subtype ---------
   mysetk<-NULL
   mysetkm<-NULL
