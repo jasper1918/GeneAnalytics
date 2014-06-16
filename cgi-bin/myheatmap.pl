@@ -100,7 +100,7 @@ if (! -e $user_result_dir) {
 }
 
 
-my $Enrichment_CMD = "R --vanilla --slave --args $genefile  $heatmaplabel $idtype  $subtype  $user_result_dir< ../resources/scripts/BRCADB_2013_plotheatmap_perl.R ";
+my $Enrichment_CMD = "R --vanilla --args $genefile  $heatmaplabel $idtype  $subtype  $user_result_dir< ../resources/scripts/BRCADB_2013_plotheatmap_perl.R ";
 
 #Wait feature here
 print'<div id="cgicontainer">';
