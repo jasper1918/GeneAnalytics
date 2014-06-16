@@ -1,10 +1,3 @@
-#mysigfile="probetest.txt"
-#signame = "tester7"
-#idtype="probe"
-#subtype="PAM50"
-#results_dir<-"/Volumes/Data/Git_Repos/GeneAnalytics/htdocs/results/tester7"
-#dir.create(results_dir)
-#setwd("/Volumes/Data/Git_Repos/GeneAnalytics/cgi-bin")
 plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c("PAM50", "MOD1", "MOD2"), results_dir){
   #Function to correlate gene expression. 
   #Jeff S Jasper, jasper1918@gmail.com
