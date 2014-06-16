@@ -1,3 +1,10 @@
+#mysigfile="probetest.txt"
+#signame = "tester7"
+#idtype="probe"
+#subtype="PAM50"
+#results_dir<-"/Volumes/Data/Git_Repos/GeneAnalytics/htdocs/results/tester7"
+#dir.create(results_dir)
+#setwd("/Volumes/Data/Git_Repos/GeneAnalytics/cgi-bin")
 plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c("PAM50", "MOD1", "MOD2"), results_dir){
   #Function to correlate gene expression. 
   #Jeff S Jasper, jasper1918@gmail.com
@@ -88,7 +95,8 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   mdata <- melt(myset, id=c("GSM","Subtype"),variable_name="probe")
   cdata <- cast(mdata, probe~Subtype, mean)
   cadata<-merge(myidann, cdata, by.x=1, by.y=1)
-  rownames(cadata)<-cadata[,2]
+  mynames<-make.names(cadata[,2], unique=T)
+  rownames(cadata)<-mynames
   cadata<-as.matrix(cadata[,-c(1:2)])
   gdata<- melt(cdata, id=c("probe"))
   adata<-merge(myidann, gdata, by.x=1, by.y=1)
@@ -96,11 +104,9 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   #ggplot heatmap
   base <- (ggplot(adata, aes(Subtype, Symbol)) + geom_tile(aes(fill = value),color = "black") 
            + scale_fill_gradient(low = "white",high = "red"))
-  myheatmap<- base + theme_bw()+theme(axis.text  = element_text(size = rel(1.5)),axis.text.y = element_text(size=rel(.8)))+labs(title = "",x = "", y="") +theme(axis.text.x = element_text(angle = 90, hjust = 1
-                                                                                                                                                                                           ))
+  myheatmap<- base + theme_bw() + theme(axis.text  = element_text(size = rel(1.5)),axis.text.y = element_text(size=rel(.8)))+labs(title = "",x = "", y="") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
   fname<-paste(signame,"_",subtype, "_Heatmap_ggplot.pdf",sep="")
   ggsave(plot=myheatmap,filename=fname, dpi=320, width=8, height=12)
-  
   
   #alternate heatmap
   require(gplots)
