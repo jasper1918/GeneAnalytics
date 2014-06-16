@@ -1,10 +1,22 @@
+mysigfile="ERRA_CL3_symbol.txt"
+signame="test_heat"
+idtype="symbol"
+subtype="PAM50"
+split="median"
+surv_type ="rfs"
+months = 240
+chemo = "any"
+tam = "any"
+results_dir<-"/Volumes/Data/Git_Repos/GeneAnalytics/htdocs/results/test2"
+dir.create(results_dir)
+setwd("/Volumes/Data/Git_Repos/GeneAnalytics/cgi-bin")
 
 plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subtype=c("PAM50", "MOD1", "MOD2", "ALL"), chemo=c("any","yes", "no"), tam=c("any","yes","no","compare"),split=c("median","tertile", "quartile"),surv_type=c("rfs","dmfs","combo"),results_dir){
-#Function to plot Kaplan-Meier curve with a gene-set. 
-#Extracts gene symbols or affy probe-sets from a tab delim txt file. 
-#patients classified with either PAM50 or MOD.
-#filter on treatment:chemo and/or tam.
-#Jeff S Jasper, jasper1918@gmail.com
+	#Function to plot Kaplan-Meier curve with a gene-set. 
+	#Extracts gene symbols or affy probe-sets from a tab delim txt file. 
+	#patients classified with either PAM50 or MOD.
+	#filter on treatment:chemo and/or tam.
+	#Jeff S Jasper, jasper1918@gmail.com
   
   #validate args
   idtype <- match.arg(idtype)
@@ -61,7 +73,6 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   require(survival)
   require(RSQLite)
   require(rmeta)
-  
   
   #load patient data from sql
   clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T) 
@@ -417,7 +428,6 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   basekmbox<-basekm +geom_boxplot(aes(fill = factor(myset[,myrow])), alpha=1)+scale_colour_brewer(palette="Set1")+scale_fill_hue(c=150, l=45) + theme_bw(base_size = 20)
   myplotkmbox<- basekmbox+ labs(fill= "",title="", x= "", y= "Log2 Expression")
   fname<-paste(signame,"_", subtype,"_", chemo,"_", tam,"_",split,"_Expression.pdf",sep="")
-  #print(myplotkmbox)
   ggsave(plot=myplotkmbox,filename=fname, dpi=320, width=12, height=10)
 
 }
