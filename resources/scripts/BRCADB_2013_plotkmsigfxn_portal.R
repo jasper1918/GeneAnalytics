@@ -414,7 +414,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   }
   #plotexpresssion-------------
   basekm<- ggplot(myset, aes(myset[,myrow], myset[,2]), environment=environment())
-  basekmbox<-basekm +geom_boxplot(aes(fill = factor(myset[,myrow])), alpha=1)+scale_colour_brewer(palette="Set1")+scale_fill_hue(c=150, l=45)
+  basekmbox<-basekm +geom_boxplot(aes(fill = factor(myset[,myrow])), alpha=1)+scale_colour_brewer(palette="Set1")+scale_fill_hue(c=150, l=45) + theme_bw(base_size = 20)
   myplotkmbox<- basekmbox+ labs(fill= "",title="", x= "", y= "Log2 Expression")
   fname<-paste(signame,"_", subtype,"_", chemo,"_", tam,"_",split,"_Expression.pdf",sep="")
   #print(myplotkmbox)

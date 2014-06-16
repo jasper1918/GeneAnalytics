@@ -65,7 +65,7 @@ plotexpr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MO
   ###plotexpression-------------
   fname<-paste(symbol,"_",subtype, "_Expression.pdf",sep="")
   basekm<- ggplot(myset, aes(myset[,myrow], myset[,2]), environment=environment())
-  basekmbox<-basekm +geom_boxplot(aes(fill = factor(myset[,myrow])), alpha=1)+scale_colour_brewer(palette="Set1")+scale_fill_hue(c=150, l=45)
+  basekmbox<-basekm +geom_boxplot(aes(fill = factor(myset[,myrow]), notch=T), alpha=1)+scale_colour_brewer(palette="Set1")+scale_fill_hue(c=150, l=45) + theme_bw(base_size = 20)
   myplotkmbox<- basekmbox+ labs(fill= "",title="", x= "", y= "Log2 Expression")
   ggsave(plot=myplotkmbox,filename=fname, dpi=320, width=12, height=10)
 }
