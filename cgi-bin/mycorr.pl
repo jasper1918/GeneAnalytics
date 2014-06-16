@@ -13,7 +13,7 @@ my $RESULT_DIR = "../htdocs/results";
 
 my $query = new CGI;
 
-###get file info from user
+#get file info from user
 my $id = $query->param("Identifier");
 my $idtype= $query->param("Idtype");
 my $subtype= $query->param("Subtype");
@@ -22,7 +22,7 @@ my $enrich= $query->param("Enrich");
 my $ip = $ENV{'REMOTE_ADDR'};
 my $user_id = $id ."_".$ip . "_" . time();
 
-# make a user directed directory
+#make a user directed directory
 my $user_result_dir = "$RESULT_DIR/$user_id";
 
 if (! -e $RESULT_DIR) {
@@ -44,14 +44,12 @@ print $query->header ( "text/html");
 print start_html(
         -title   => 'Results',
         -author  => 'jasper1918@gmail.com',
-	#-bgcolor =>"#FFF",
-	#-style   => {'src' => 'http://dmd-lab.dhe.duke.edu../htdocs/iframehtml/iframeload.css'},
     );
 
 print '<body>';
 my $Enrichment_CMD = "R  --vanilla --slave --args $id $idtype $subtype $enrich $user_result_dir< ../resources/scripts/BRCADB_2013_corrfxn_perl.R ";
 
-###Wait feature here 
+#Wait feature here 
 print'<div id="cgicontainer">';
 print'<div id="overlay" class="spinbox" >';
 print'<div id="spindiv" class="spinner" >';
@@ -67,7 +65,7 @@ print'<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.mi
 system($Enrichment_CMD);
 print '<script type="text/javascript">$("#spindiv").hide(500);</script>';
 print '<script type="text/javascript">$("#overlay").hide(500);</script>';
-##zip the files
+#zip the files
    my $zip = Archive::Zip->new();
    
    # Add a directory tree
@@ -87,5 +85,4 @@ print "<p>Total time: " . $total_time . " Seconds</p>";
 print "<p><a href=$zipfileloc> Download</a> your results.</p>";
 print end_html;
 
- 
 exit 0;

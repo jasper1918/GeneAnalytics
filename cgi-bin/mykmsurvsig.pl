@@ -17,7 +17,7 @@ my $RESULT_DIR = "../htdocs/results";
 
 my $query = new CGI;
 
-###get file info from user
+#get file info from user
 my $sigfilename = $query->param("datafile");
 my $months = $query->param("survmonths"); 
 my $siglabel = $query->param("mylabel");
@@ -48,8 +48,6 @@ if (!$siglabel){
 	exit;
 }
 
-
-
 #upload file
 my $safe_filename_characters = "a-zA-Z0-9_.-";                                  
 my $upload_dir = "../htdocs/uploads";
@@ -78,7 +76,7 @@ my ( $name, $path, $extension ) = fileparse ( $sigfilename, '\..*' );
 	}
 	close (UPLOADFILE);
 
-# make a user directed directory
+#make a user directed directory
 my $user_result_dir = "$RESULT_DIR/$user_id";
 
 if (! -e $RESULT_DIR) {
@@ -100,14 +98,12 @@ print $query->header ( "text/html");
 print start_html(
         -title   => 'Results',
         -author  => 'jasper1918@gmail.com',
-	#-bgcolor =>"#FFF",
-	#-style   => {'src' => 'http://dmd-lab.dhe.duke.edu../htdocs/iframehtml/iframeload.css'},
     );
 
 print '<body>';
 my $Enrichment_CMD = "R --vanilla --slave --args $sigfilename $siglabel $idtype $months $subtype $split $tamoxifen $chemo $surv $user_result_dir< ../resources/scripts/BRCADB_2013_plotkmsigfxn_perl.R ";
 
-###Wait feature here
+#Wait feature here
 print'<div id="cgicontainer">';
 print'<div id="overlay" class="spinbox" >';
 print'<div id="spindiv" class="spinner" >';
@@ -122,7 +118,8 @@ print'<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.mi
 system($Enrichment_CMD);
 print '<script type="text/javascript">$("#spindiv").hide(500);</script>';
 print '<script type="text/javascript">$("#overlay").hide(500);</script>';
-##zip the files
+
+#zip the files
    my $zip = Archive::Zip->new();
    
    # Add a directory tree
@@ -141,6 +138,5 @@ my $zipfileloc = "../results"."/".$user_id."/".$siglabel."-"."sig_survival.zip";
 print "<p>Total time: " . $total_time . " Seconds</p>";
 print "<p><a href=$zipfileloc> Download</a> your results.</p>";
 print end_html;
-
  
 exit 0;

@@ -17,12 +17,11 @@ my $RESULT_DIR = "../htdocs/results";
 
 my $query = new CGI;
 
-###get file info from user
+#get file info from user
 my $genefile = $query->param("datafile");
 my $idtype= $query->param("Idtype");
 my $heatmaplabel = $query->param("mylabel");
 my $subtype= $query->param("Subtype");
-
 
 #sanitize labels
 $heatmaplabel =~ s/[^a-zA-Z0-9.\/-]/_/g;
@@ -68,8 +67,6 @@ print $query->header ( "text/html");
 print start_html(
         -title   => 'Results',
         -author  => 'jasper1918@gmail.com',
-	#-bgcolor =>"#FFF",
-	#-style   => {'src' => 'http://dmd-lab.dhe.duke.edu../htdocs/iframehtml/iframeload.css'},
     );
 
 print '<body>';
@@ -84,7 +81,7 @@ if (scalar($lines) > 50 ) {
 	exit;
 	}
 
-# make a user directed directory
+#make a user directed directory
 my $user_result_dir = "$RESULT_DIR/$user_id";
 
 if (! -e $RESULT_DIR) {
@@ -105,7 +102,7 @@ if (! -e $user_result_dir) {
 
 my $Enrichment_CMD = "R --vanilla --slave --args $genefile  $heatmaplabel $idtype  $subtype  $user_result_dir< ../resources/scripts/BRCADB_2013_plotheatmap_perl.R ";
 
-###Wait feature here
+#Wait feature here
 print'<div id="cgicontainer">';
 print'<div id="overlay" class="spinbox" >';
 print'<div id="spindiv" class="spinner" >';
@@ -117,7 +114,8 @@ print'<script src="../assets/spinjs/spin.js" type="text/javascript"></script>';
 print'<script src="../assets/spinjs/spinneropts.js" type="text/javascript"></script>';
 print'<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>';
 system($Enrichment_CMD); 
-##zip the files
+
+#zip the files
    my $zip = Archive::Zip->new();
    # Add a directory tree
     $zip->addTree( $user_result_dir."/".$heatmaplabel."-"."heatmap",$heatmaplabel."-"."heatmap", sub { -f && -r } );
@@ -140,5 +138,4 @@ print "<p>Total time: " . $total_time . " Seconds</p>";
 print "<p><a href=$zipfileloc> Download</a> your results.</p>";
 print end_html;
 
- 
 exit 0;
