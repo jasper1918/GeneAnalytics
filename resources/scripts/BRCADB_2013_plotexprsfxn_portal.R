@@ -1,12 +1,9 @@
-#id="notch1"
-#idtype="symbol"
-#subtype="PAM50"
-#results_dir<-"/home/jasper1918/mygit/gene_analytics/htdocs/results/test"
-#dir.create(results_dir)
-#setwd("~/mygit/gene_analytics/cgi-bin")
-#plotexpr(id, idtype,subtype, results_dir)
+
 plotexpr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2", "ALL"),results_dir){
-  ###validation and data prep----
+  #Function to correlate gene expression. 
+  #Jeff S Jasper, jasper1918@gmail.com
+
+  #validate args
   idtype <- match.arg(idtype)
   subtype <- match.arg(subtype)
   
@@ -18,22 +15,21 @@ plotexpr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MO
   
   #get identifiers
   if (!exists("symbol") & exists("probe")){
-    library(hgu133a.db)
+    require(hgu133a.db)
     symbol = unlist(mget(probe, hgu133aSYMBOL))
     symbol<-symbol[[1]]}
   if (!exists("probe") & exists("symbol")){
-    library(jetset)
+    require(jetset)
     symbol
     symbol<- toupper(symbol)
     probe<-jmap('hgu133a', symbol = symbol)[[1]]}
 
-  ###load data using from sql
+  #load data using from sql
   clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T) 
   rownames(clin)<-clin[,2]
   
-  library(ggplot2)
-  library(RSQLite)
-
+  require(ggplot2)
+  require(RSQLite)
   
   drv <- dbDriver("SQLite")
   con <- dbConnect(drv, dbname="../resources/external/BRCADB_final_2013.sqlite")
@@ -53,7 +49,6 @@ plotexpr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MO
   dir.create(mydir)
   mydir2<-paste(mydir, "/", sep="")
   setwd(mydir2)
-
   
   if (subtype=='PAM50') {setlistkm<-levels(clin[,3])
                          myrow<-5 }#pam50
@@ -61,7 +56,6 @@ plotexpr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MO
                         myrow<-6 }# mod1
   if (subtype=='MOD2') {setlistkm<-levels(clin[,5])
                         myrow<-7 }#mod2
-  
   
   subtypename<-gsub("/", "_", setlistkm)
   subtypename<-gsub("\\+", "pos", subtypename)

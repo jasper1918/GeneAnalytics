@@ -1,9 +1,12 @@
 
 docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2"),enrich=c("yes","no"),results_dir) {
+	#Function to correlate gene expression. 
+	#Jeff S Jasper, jasper1918@gmail.com
+
   load("../resources/external/BRCADB_final_2013_Data.RData")
-  #suppressPackageStartupMessages(library(WGCNA))
-  #allowWGCNAThreads(8)
   clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T)
+
+  #validate args
   idtype <- match.arg(idtype)
   subtype <- match.arg(subtype)
   
@@ -15,17 +18,16 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   
   #get identifiers
   if (!exists("symbol") & exists("probe")){
-    library(hgu133a.db)
+    require(hgu133a.db)
     symbol = unlist(mget(probe, hgu133aSYMBOL))
     symbol<-symbol[[1]]}
   if (!exists("probe") & exists("symbol")){
-    library(jetset)
+    require(jetset)
     symbol
     symbol<- toupper(symbol)
     probe<-jmap('hgu133a', symbol = symbol)[[1]]
   }
   
-
   brcadbdata<-as.data.frame(t(exprs(myesetann)))
   basedir<-results_dir
   name<-paste(symbol, "-", probe, sep="")
@@ -45,8 +47,7 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   cat("Doing:", "Overall","\n")
   overallcorr<-cor(brcadbdata[,1:ncol(brcadbdata)],brcadbdata[,probe],use='p')
 
-  
-  ####subtype corr
+  #subtype corr
   spdata<-NULL
   for(i in 1:length(setlist) ){
     cat(",", setlist[i],"\n")
@@ -60,7 +61,7 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   }
   
   #Merge all subtypes
-  library(abind)
+  require(abind)
   subtypecorr<-abind(spdata)
   
   #merge all to one, make col names
@@ -69,7 +70,7 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   colnames(allcorr)<-c(paste("Overall_", symbol, sep=""), probesub)
   
   ##get annot
-  library(hgu133a.db)
+  require(hgu133a.db)
   Probe_ID <- featureNames(myesetann)
   Gene_Symbol<- unlist(mget(Probe_ID,hgu133aSYMBOL))
   #rs <- unlist(mget(Probe_ID,hgu133aREFSEQ)) #not one to one
@@ -92,7 +93,7 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   
   #plot overall each end
   cat(", Plotting Correlation","\n")
-  library(corrplot)
+  require(corrplot)
   sptotdata<-t(exprs(myesetann[rownames(sptot),]))
   sptotdatacorr<-cor(sptotdata,method="spearman")
   myrowsym<- unlist(mget(rownames(sptotdatacorr),hgu133aSYMBOL))
@@ -141,22 +142,17 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
     colnames(final_cor)<-c("From", "To", "strength")
     unique.genes<-data.frame(name=unique(final_cor[,2]))
     
-    library(igraph)
+    require(igraph)
     final_cor$strength=final_cor$strength * 10
     g <- graph.data.frame(final_cor, directed=TRUE, vertices=unique.genes)
-    #print(g, e=TRUE, v=TRUE)
-    #get.data.frame(g, what="vertices")
-    #get.data.frame(g, what="edges")
     
-    library(RColorBrewer)
+    
+    require(RColorBrewer)
     set.seed(1919)
     the.layout = layout.fruchterman.reingold(g, weights=E(g)$strength, coolexp=3, area=vcount(g)^2.3, repulserad=vcount(g)^3)[match(V(g)$name, V(g)$name),]
     #the.layout = layout.kamada.kawai(g)
     v.colors = brewer.pal(9,"YlOrRd") #YlGnBu or YlOrRd
     v.col = v.colors[cut(E(g)$strength,c(1,3,quantile(E(g)$strength,probs=seq(.3,1,length=7))),labels=F)][match(V(g)$name, V(g)$name)]
-    
-    #e.colors = brewer.pal(9,"Greys")
-    #e.col = e.colors[cut(E(g)$strength,c(1,3,quantile(E(g)$strength,probs=seq(.3,1,length=7))),labels=F)][match(V(g)$name, V(g)$name)]
     
     l.size <-2 * E(g)$strength / max(E(g)$strength)+.2
     v.size <-25 * E(g)$strength / max(E(g)$strength)+10
@@ -172,7 +168,7 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   
   #do enrichment c2 GSEA
     cat(", Doing Enrichment","\n")
-    library(gage)
+    require(gage)
     load("../resources/data/GSEA_C2_list.R.RData")
   
     mydata<-allcorr_annot[,c(3,6)]
@@ -205,23 +201,17 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
     colnames(final_cor)<-c("From", "To", "strength")
     unique.genes<-data.frame(name=unique(final_cor[,2]))
     
-    library(igraph)
+    require(igraph)
     final_cor$strength=final_cor$strength * 10
     g <- graph.data.frame(final_cor, directed=TRUE, vertices=unique.genes)
-    #print(g, e=TRUE, v=TRUE)
-    #get.data.frame(g, what="vertices")
-    #get.data.frame(g, what="edges")
     
-    library(RColorBrewer)
+    require(RColorBrewer)
     set.seed(1919)
     the.layout = layout.fruchterman.reingold(g, weights=E(g)$strength, coolexp=3, area=vcount(g)^2.3, repulserad=vcount(g)^3)[match(V(g)$name, V(g)$name),]
     #the.layout = layout.kamada.kawai(g)
     v.colors = brewer.pal(9,"YlOrRd") #YlGnBu or YlOrRd
     v.col = v.colors[cut(E(g)$strength,c(1,3,quantile(E(g)$strength,probs=seq(.3,1,length=7))),labels=F)][match(V(g)$name, V(g)$name)]
-    
-    #e.colors = brewer.pal(9,"Greys")
-    #e.col = e.colors[cut(E(g)$strength,c(1,3,quantile(E(g)$strength,probs=seq(.3,1,length=7))),labels=F)][match(V(g)$name, V(g)$name)]
-    
+
     l.size <-2 * E(g)$strength / max(E(g)$strength)+.2
     v.size <-25 * E(g)$strength / max(E(g)$strength)+10
     

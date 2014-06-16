@@ -1,6 +1,9 @@
 
 plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1", "MOD2", "ALL"), chemo=c("any","yes", "no"), tam=c("any","yes","no","compare"),split=c("median","tertile", "quartile"), surv_type=c("rfs","dmfs","combo") ,results_dir){
-  ###validation and data prep----
+  #Function to correlate gene expression. 
+  #Jeff S Jasper, jasper1918@gmail.com
+
+  #validate args
   idtype <- match.arg(idtype)
   chemo <- match.arg(chemo)
   tam <- match.arg(tam)
@@ -29,7 +32,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
  
   if (missing(months)) months = 160
 
-  ###load data using from sql
+  #load data using from sql
   clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T) 
   rownames(clin)<-clin[,2]
   require(ggplot2)
@@ -76,7 +79,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
       myset<-myset[myset[,1] %in% survcases$GSM,]}
   }
 
-  ###get ready to plot-------
+  #get ready to plot-------
   basedir<-results_dir
   name<-paste(symbol, "-", probe, sep="")
   mydir<-paste(basedir,"/", id, "-","survival",sep="")
@@ -160,15 +163,9 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
   nval<-dim(val)[1]
   text(months/3,.05, paste("pval=",p.value,","," HR=",HR,",", " N=",nval),cex=1.5)
   rug(mysetkm[,mysurv_time][mysetkm[,mysurv_event]==0])
-  
-  #medinf<-summary(myfitkm)$table
-  #rownames(medinf)<-c(paste(symbol,"-Low", sep=""), paste(symbol,"-High", sep=""))
-  #medinf<-as.matrix(medinf)
-  #myinf<-medinf[,c(1,4,5,6,7)]
-  #colnames(myinf)<-c("Samples","Events", "median", "0.95LCL", "0.95UCL")
   dev.off()
   
-  ###forestplots--
+  #forestplots--
   myGSEIDS<-as.character(unique(mysetk$GSE))
   
   rescale <- function(x, na.rm=FALSE, q=0.05) {
@@ -194,7 +191,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
     mysetpts[j]<-dim(myeset[[j]])[[1]]
   }
   
-  ###get data into usable format
+  #get data into usable format
   require(abind)
   j<-abind(hratio,along=1)
   mysetindex<-rep(myGSEIDS, each=2)
@@ -206,7 +203,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
   myhrdf$no<-mysetpts
   myhrdf<-na.omit(myhrdf)
   
-  ###forestplot
+  #forestplot
   myspace <- " "
   mybigspace <- "    "
   labeltext <- cbind(c("Dataset",paste(myhrdf$set, ", N=", myhrdf$no, sep="")),c(rep(mybigspace,length(myhrdf$set)+1)))
@@ -221,7 +218,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
                   col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs ) #clip=c(0,1)
   dev.off()
  
-  ###plot by subtype ---------
+  #plot by subtype ---------
   mysetk<-NULL
   mysetkm<-NULL
   mycoxkm<-NULL
@@ -229,7 +226,6 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
   myfitkm<-NULL
   
   for(i in 1:length(setlistkm)){
-    #cat("Plotting=:", setlistkm[i], "\n")
     medinf<-NULL
     mytext<-NULL
     myinf<-NULL
@@ -239,7 +235,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
     mysetk[[i]] <- within(mysetk[[i]], datasplit <- as.integer(cut(mysetk[[i]][,2], quantile(mysetk[[i]][,2], probs=0:mysplit/mysplit), include.lowest=TRUE)))
     mysetkm[[i]] <- subset(mysetk[[i]], datasplit %in% mykeep)
     
-    ###need a failsafe if not enough records
+    #failsafe if not enough records
     table(mysetkm[[i]]$MYSURV_Event,mysetkm[[i]]$datasplit)
     write.table(mysetkm[[i]], paste( paste(subtypename[i], "-myset.txt",sep=""), sep=""), sep="\t", col.names=NA)
     
@@ -257,11 +253,6 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
       nval<-dim(val)[1]
       text(months/3,.05, paste("pval=",p.value,",", " N=",nval),cex=1.5)
       rug(mysetkm[[i]][,mysurv_time][mysetkm[[i]][,mysurv_event]==0])
-      #medinf<-summary(myfitkm[[i]])$table
-      #rownames(medinf)<-c(paste(symbol,"-Low", sep=""), paste(symbol,"-High", sep=""))
-      #medinf<-as.matrix(medinf)
-      #myinf<-medinf[,c(1,4,5,6,7)]
-      #colnames(myinf)<-c("Samples","Events", "median", "0.95LCL", "0.95UCL")
       dev.off()
     }
     
@@ -292,7 +283,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
       dev.off()
     }
     
-    ###forestplots---
+    #forestplots---
     myGSEdf<-data.frame(table(mysetkm[[i]]$MYSURV_Event,mysetkm[[i]]$GSE))
     myGSEdf<-subset(myGSEdf, myGSEdf[,1]==1 & myGSEdf[,3] >= 1)
     myGSEIDS<-as.character(unique(myGSEdf[,2]))
@@ -321,7 +312,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
         mysetpts[j]<-dim(myeset[[j]])[[1]]
       }
       
-      ###get data into usable format
+      #get data into usable format
       require(abind)
       j<-abind(hratio,along=1)
       mysetindex<-rep(myGSEIDS, each=2)
@@ -333,7 +324,7 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
       myhrdf$no<-mysetpts
       myhrdf<-na.omit(myhrdf)
       
-      ###forestplot
+      #forestplot
       if(dim(myhrdf)[[1]]>=1){
         myspace <- " "
         mybigspace <- "    "
@@ -351,12 +342,11 @@ plotkm<-function( id,idtype=c("symbol", "probe"),months,subtype=c("PAM50", "MOD1
       }
     }
   }
-  ###plotexpresssion-------------
+  #plotexpression-------------
   basekm<- ggplot(myset, aes(myset[,myrow], myset[,2]), environment=environment())
   basekmbox<-basekm +geom_boxplot(aes(fill = factor(myset[,myrow])), alpha=1)+scale_colour_brewer(palette="Set1")+scale_fill_hue(c=150, l=45)
   myplotkmbox<- basekmbox+ labs(fill= "",title="", x= "", y= "Log2 Expression")
   fname<-paste(symbol,"_", subtype,"_", chemo,"_", tam,"_",split,"_Expression.pdf",sep="")
-  #print(myplotkmbox)
   ggsave(plot=myplotkmbox,filename=fname, dpi=320, width=12, height=10)
 }
 

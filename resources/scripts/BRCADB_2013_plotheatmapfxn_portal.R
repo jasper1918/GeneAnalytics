@@ -1,16 +1,11 @@
-#mysigfile="ERRA_CL3_sym.txt"
-#signame="test_heat"
-#idtype="symbol"
-#subtype="PAM50"
-#results_dir<-"/home/jasper1918/mygit/gene_analytics/htdocs/results/test2"
-#dir.create(results_dir)
-#setwd("~/mygit/gene_analytics/cgi-bin")
-#plotheatmap(mysigfile,signame, idtype,subtype, results_dir)
 plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c("PAM50", "MOD1", "MOD2"), results_dir){
-  
-  #validation
+  #Function to correlate gene expression. 
+  #Jeff S Jasper, jasper1918@gmail.com
+
+  #validate args
   idtype <- match.arg(idtype)
   subtype <- match.arg(subtype)
+
   #get file
   mysigfileloc<-paste("../htdocs/uploads","/", mysigfile, sep="")
   mysigfiledn<-read.table(mysigfileloc, sep="\t", header=F)
@@ -27,7 +22,7 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   
   #get identifiers, validate, inform if missing
   if (!exists("sigsymbols") & exists("sigprobes")){
-    library(hgu133a.db)
+    require(hgu133a.db)
     sigsymbols_map = unlist(mget(sigprobes, hgu133aSYMBOL,ifnotfound=NA))
     sigpmissing<-subset(sigsymbols_map,is.na(sigsymbols_map))
     
@@ -38,7 +33,7 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
     myidann<-data.frame(names(sigann), sigann)
   }
   if (!exists("sigprobes") & exists("sigsymbols")){
-    library(jetset)
+    require(jetset)
     sigsymbols<- toupper(sigsymbols)
     sigprobes_map<-(jmap('hgu133a', symbol = sigsymbols))
     sigsmissing<-subset(sigprobes_map,is.na(sigprobes_map))
@@ -54,8 +49,8 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   rownames(myidann)<-myidann$Probe
   myidann<-myidann[order(myidann$Probe),]
   
-  ###load data using sql
-  library(RSQLite)
+  #load data using sql
+  require(RSQLite)
   drv <- dbDriver("SQLite")
   con <- dbConnect(drv, dbname="../resources/external/BRCADB_final_2013.sqlite")
   dbListTables(con)
@@ -80,7 +75,7 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   colnames(clindf)<-c("GSM","Subtype")
   myset<-merge(clindf, gene, by.x=1, by.y=0)
   
-  ###get ready to plot-------
+  #get ready to plot-------
   basedir<-results_dir
   mydir<-paste(basedir,"/", signame, "-","heatmap",sep="")
   dir.create(mydir)
@@ -88,8 +83,8 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   setwd(mydir2)
   
   #reshape data for heatmap
-  library(ggplot2)
-  library(reshape)
+  require(ggplot2)
+  require(reshape)
   mdata <- melt(myset, id=c("GSM","Subtype"),variable_name="probe")
   cdata <- cast(mdata, probe~Subtype, mean)
   cadata<-merge(myidann, cdata, by.x=1, by.y=1)
@@ -98,7 +93,7 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   gdata<- melt(cdata, id=c("probe"))
   adata<-merge(myidann, gdata, by.x=1, by.y=1)
   
-  ###ggplot heatmap
+  #ggplot heatmap
   base <- (ggplot(adata, aes(Subtype, Symbol)) + geom_tile(aes(fill = value),color = "black") 
            + scale_fill_gradient(low = "white",high = "red"))
   myheatmap<- base + theme_bw()+theme(axis.text  = element_text(size = rel(1.5)),axis.text.y = element_text(size=rel(.8)))+labs(title = "",x = "", y="") +theme(axis.text.x = element_text(angle = 90, hjust = 1
@@ -108,8 +103,8 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   
   
   #alternate heatmap
-  library(gplots)
-  library(RColorBrewer)
+  require(gplots)
+  require(RColorBrewer)
   
   mydistman= function(x) dist(x,method = 'manhattan')
   
