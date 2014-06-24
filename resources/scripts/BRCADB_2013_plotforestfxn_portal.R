@@ -1,16 +1,14 @@
 plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("hr", "ci"),chemo=c("any","yes", "no"), tam=c("any","yes","no","compare"), subtype=c("basal", "luma", "lumb", "her2", "normal"),surv_type=c("rfs","dmfs","combo"), results_dir){
-  #Function to correlate gene expression. 
-  #Jeff S Jasper, jasper1918@gmail.com
-
-  #validate args
+  
+  #validation
   idtype <- match.arg(idtype)
   metric<-match.arg(metric)
   chemo <- match.arg(chemo)
   tam <- match.arg(tam)
   subtype <- match.arg(subtype)
   surv_type<-match.arg(surv_type)
-
   #get file
+  
   mysigfileloc<-paste("../htdocs/uploads","/", mysigfile, sep="")
   mysigfiledn<-read.table(mysigfileloc, sep="\t", header=F)
   
@@ -26,7 +24,7 @@ plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("
  
   #get identifiers, validate, inform if missing
   if (!exists("sigsymbols") & exists("sigprobes")){
-    require(hgu133a.db)
+    library(hgu133a.db)
     sigsymbols_map = unlist(mget(sigprobes, hgu133aSYMBOL,ifnotfound=NA))
     sigpmissing<-subset(sigsymbols_map,is.na(sigsymbols_map))
     
@@ -37,7 +35,7 @@ plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("
     myidann<-data.frame(names(sigann), sigann)
   }
   if (!exists("sigprobes") & exists("sigsymbols")){
-    require(jetset)
+    library(jetset)
     sigsymbols<- toupper(sigsymbols)
     sigprobes_map<-(jmap('hgu133a', symbol = sigsymbols))
     sigsmissing<-subset(sigprobes_map,is.na(sigprobes_map))
@@ -52,12 +50,12 @@ plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("
   colnames(myidann)<-c("Probe", "Symbol")
   rownames(myidann)<-myidann$Probe
  
-  #load data using sql
-  require(survcomp)
-  require(Biobase)
-  require(rmeta)
-  require(RSQLite)
-  require(genefu)
+  ###load data using sql
+  library(survcomp)
+  library(Biobase)
+  library(rmeta)
+  library(RSQLite)
+  library(genefu)
 
   drv <- dbDriver("SQLite")
   con <- dbConnect(drv, dbname="../resources/external/BRCADB_final_2013.sqlite")
@@ -117,7 +115,7 @@ plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("
   myset<-merge( clin, t(gene), by.x=2, by.y=0)
   rownames(myset)<-myset[,1]
   
-  #get ready to plot-------
+  ###get ready to plot-------
   basedir<-results_dir
   mydir<-paste(basedir,"/", signame, "-","forestplot",sep="")
   dir.create(mydir)
@@ -133,7 +131,7 @@ plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("
     return((x - 0.5) * 2)
   }
   
-#calc metrics and plot
+###calc metrics and plot
   if (metric=="hr"){
   hratio<- t(apply(X=rescale(t(myset[,30:ncol(myset)]) , q=0.05, na.rm=TRUE), MARGIN=1, function(x, y, z) {
     tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE);

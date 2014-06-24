@@ -18,9 +18,9 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet" />
-	<!-- GoogleTRacking -->
-    <?php include_once("assets/analyticstracking.php") ?>
-    
+    <!-- GoogleTRacking -->
+    <?php include_once( "assets/analyticstracking.php") ?>
+
     <!-- InstanceBeginEditable name="EditRegion3" -->
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -191,6 +191,7 @@
                                             </label>
                                             <label class="radio" for="IDType-1">
                                                 <input type="radio" name="Idtype" value="symbol" id="idsymbol" />Gene Symbol
+                                                <i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Choosing Symbol will automatically identify the best available probe."></i>
                                             </label>
                                         </div>
                                     </div>
@@ -201,7 +202,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 col-sm-2 control-label" for="textinput">Identifier</label>
                                         <div class="col-lg-9">
-                                            <input name="Identifier" type="text" value="" id="identifier">
+                                            <input name="Identifier" type="text" value="" id="identifier"><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Either an HG-U133A probe or Symbol"></i>
 
                                         </div>
                                     </div>
@@ -218,7 +219,7 @@
 
                                                 <option value="MOD2">MOD2</option>
 
-                                            </select>
+                                            </select><i title="" data-placement="right" data-toggle="tooltip " class="fa icon-question-sign tooltips" type="button" data-original-title="Molecular Subtype classifying algorithm to use"></i>
                                         </div>
                                     </div>
 
@@ -244,63 +245,67 @@
 
                     </div>
                     <!-- col-lg-12 end -->
-           <div class="row">
-                    <div class="col-lg-10 col-lg-offset-1">
-                        <section class="panel">
-                            <div class="panel-body">
-                                <h3>Gene Expression</h3>
-                                <hr>
-                                <ul>
-                                    <li><strong>Gene Expression</strong>
-                                        <ol style="list-style: none; ">
-                                            <li>This program produces a boxplot of gene expression across tumor subtypes.
-                                            </li>
-                                        </ol>
-                                    </li>
-                                    <li><strong>Parameters</strong>
-                                        <ol>
-                                            <li style="list-style: none; ">
-                                                <strong>Id Type/Identifier</strong>
-                                                <ul style="list-style: none; ">
-                                                    <li>Enter a valid HGU133A probeset (204624_at) or a HUGO gene symbol. If a gene symbol is entered the best available probeset will be identified using jetset<a href="link here"> Add link</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li style="list-style: none; ">
-                                                <strong>Subtype</strong>
-                                                <ul style="list-style: none; ">
-                                                    <li>Algorithm that defines the tumor subtypes.</li>
-                                                </ul>
-                                            </li>
-                                        </ol>
-                                    </li>
-                                    <li><strong>Data Output</strong>
-                                        <ol>
-                                            <li style="list-style: none; ">Following submission, the results are printed in the webpage with a link to download all the relevent data and plots as a zip file. All plots are generated as PDFs to ensure high quality for publication purposes.Generated data include:
-                                                <ol>
-                                                    <li style="list-style: decimal; ">Boxplot of gene expression across tumor subtype.</li>
-                                                </ol>
-                                            </li>
-                                        </ol>
-                                </ul>
-                                <div class="col-lg-12">
-                                    <section class="panel">
-                                        <header class="panel-heading">
-                                            <strong>Example Gene Expression Plot</strong>
+                    <div class="row">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <h3>Gene Expression</h3>
+                                    <hr>
+                                    <ul>
+                                        <li>
+                                            <strong>Gene Expression</strong>
+                                            <ol style="list-style: none; ">
+                                                <li>This program produces a boxplot of gene expression across tumor subtypes.
+                                                </li>
+                                            </ol>
+                                        </li>
+                                        <li>
+                                            <strong>Parameters</strong>
+                                            <ol>
+                                                <li style="list-style: none; ">
+                                                    <strong>Id Type/Identifier</strong>
+                                                    <ul style="list-style: none; ">
+                                                        <li>Enter a valid HGU133A probeset (204624_at) or a HUGO gene symbol. If a gene symbol is entered the best available probeset will be identified using jetset<a href="link here"> Add link</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li style="list-style: none; ">
+                                                    <strong>Subtype</strong>
+                                                    <ul style="list-style: none; ">
+                                                        <li>Classifier that defines the tumor subtypes. PAM50 or MOD.</li>
+                                                    </ul>
+                                                </li>
+                                            </ol>
+                                        </li>
+                                        <li>
+                                            <strong>Data Output</strong>
+                                            <ol>
+                                                <li style="list-style: none; ">Following submission, the results are printed in the webpage with a link to download all the relevent data and plots as a zip file. All plots are generated as PDFs to ensure high quality for publication purposes.Generated data include:
+                                                    <ol>
+                                                        <li style="list-style: decimal; ">Boxplot of gene expression across tumor subtypes.</li>
+                                                    </ol>
+                                                </li>
+                                            </ol>
+                                        </li>
+                                    </ul>
+                                    <div class="col-lg-12">
+                                        <section class="panel">
+                                            <header class="panel-heading">
+                                                <strong>Example Gene Expression Plot</strong>
 
-                                        </header>
-                                        <div class="panel-body" style="display: block;">
+                                            </header>
+                                            <div class="panel-body" style="display: block;">
 
-                                            <img src="assets/pics/myplots/AURKA_PAM50_Expression.jpg" width="570" height="480"></img>
-                                        </div>
-                                    </section>
+                                                <img src="assets/pics/myplots/AURKA_PAM50_Expression.jpg" width="450" height="375"></img>
+                                            </div>
+                                        </section>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </section>
+                            </section>
+                        </div>
+
                     </div>
-
-                </div>
             </section>
             <!--wrapper end-->
             <!-- InstanceEndEditable -->

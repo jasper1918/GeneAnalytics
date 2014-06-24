@@ -19,7 +19,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet" />
     <!-- GoogleTRacking -->
-    <?php include_once("assets/analyticstracking.php") ?>
+    <?php include_once( "assets/analyticstracking.php") ?>
 
     <!-- InstanceBeginEditable name="EditRegion3" -->
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
@@ -327,13 +327,15 @@
                                 <h3>Kaplan-Meier Survival Curves for a Single Gene</h3>
                                 <hr>
                                 <ul>
-                                    <li><strong>Survival Analysis</strong>
+                                    <li>
+                                        <strong>Survival Analysis</strong>
                                         <ol style="list-style: none; ">
-                                            <li>This program produces KM curves and metaplot for each.
+                                            <li>This program produces KM curves and a meta-plot for each tumor subtype in the defined patient cohort.
                                             </li>
                                         </ol>
                                     </li>
-                                    <li><strong>Parameters</strong>
+                                    <li>
+                                        <strong>Parameters</strong>
                                         <ol>
                                             <li style="list-style: none; ">
                                                 <strong>Id Type/Identifier</strong>
@@ -345,51 +347,53 @@
                                             <li style="list-style: none; ">
                                                 <strong>Months</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>The number of months to plot. This parameter does not currenlty alter the months for significance testing.</li>
+                                                    <li>The number of months to plot. This parameter does not currenlty alter significance testing.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>Subtype</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>Survival plots will be generated for each tumor subtype from the chose algorithm.</li>
+                                                    <li>Survival plots will be generated for each tumor subtype from the chosen algorithm. PAM50 or MOD.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>Split</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Split the data into "High" and "Low" categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used depending on type of split chosen.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
-                                                <strong>Tamoxifen</strong>>
+                                                <strong>Tamoxifen</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Select patient cohort according to tamoxifen treatment. Yes, No or Compare across treatment.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>Chemo</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Select patient cohort according to chemo treatment. Yes or No.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>End Point</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Either Relapse-Free Survival (RFS), Distant-Metastasis Free Survival (DMFS), or the aggregate (RFS/DMFS).</li>
                                                 </ul>
                                             </li>
                                         </ol>
                                     </li>
-                                    <li><strong>Data Output</strong>
+                                    <li>
+                                        <strong>Data Output</strong>
                                         <ol>
                                             <li style="list-style: none; ">Following submission, the results are printed in the webpage with a link to download all the relevent data and plots as a zip file. All plots are generated as PDFs to ensure high quality for publication purposes.Generated data include:
                                                 <ol>
                                                     <li style="list-style: decimal; ">KM curves for each subtype</li>
-                                                    <li style="list-style: decimal; ">Forest plots for each subtype</li>
+                                                    <li style="list-style: decimal; ">Meta-Plot for each subtype</li>
                                                     <li style="list-style: decimal; ">All gene expression and associated clinical data</li>
                                                 </ol>
                                             </li>
                                         </ol>
+                                    </li>
                                 </ul>
                                 <div class="col-lg-12">
                                     <section class="panel">
@@ -407,7 +411,7 @@
                                 <div class="col-lg-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            <strong>Example Forest Plot</strong>
+                                            <strong>Example Meta-Plot</strong>
                                         </header>
                                         <div class="panel-body" style="display: block;">
 

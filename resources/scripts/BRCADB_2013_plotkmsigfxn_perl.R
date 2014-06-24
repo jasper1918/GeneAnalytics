@@ -1,4 +1,4 @@
-##signature survival from perl
+#signature survival from perl
 args <- commandArgs(trailingOnly = TRUE)
 mysigfile<-args[1]
 mysigname<-args[2]

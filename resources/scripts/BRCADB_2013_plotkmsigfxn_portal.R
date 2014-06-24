@@ -5,6 +5,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
 	#filter on treatment:chemo and/or tam.
 	#Jeff S Jasper, jasper1918@gmail.com
   
+
   #validate args
   idtype <- match.arg(idtype)
   chemo <- match.arg(chemo)
@@ -16,13 +17,15 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   surv_type<-match.arg(surv_type)
   months<-as.numeric(months)
 
+
   #load input file with ids
   mysigfileloc<-paste("../htdocs/uploads","/", mysigfile, sep="")
+
   mysigfiledn<-read.table(mysigfileloc, sep="\t", header=F)
   
   id<-as.character(mysigfiledn[,1])
   id<-gsub("\\s","", id)
-  
+ 
   if (exists("mysigfiledn") & (idtype=="symbol")){
     sigsymbols<-id
   } else if (exists("mysigfiledn") & (idtype=="probe")){
@@ -33,7 +36,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   if (dim(mysigfiledn)[[2]]!=2){
     stop("Please check file format. Stopping.")
   }
-  
+
   #get identifiers, validate, inform if missing
   if (!exists("sigsymbols") & exists("sigprobes")){
     require(hgu133a.db)
@@ -231,7 +234,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   #colnames(myinf)<-c("Samples","Events", "median", "0.95LCL", "0.95UCL")
   dev.off()
  
-  #forestplots--
+  #metaplot--
   myGSEIDS<-as.character(unique(mysetk$GSE))
   
   rescale <- function(x, na.rm=FALSE, q=0.05) {

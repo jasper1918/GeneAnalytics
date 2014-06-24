@@ -19,7 +19,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet" />
     <!-- GoogleTRacking -->
-    <?php include_once("assets/analyticstracking.php") ?>
+    <?php include_once( "assets/analyticstracking.php") ?>
 
     <!-- InstanceBeginEditable name="EditRegion3" -->
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
@@ -346,53 +346,62 @@
                                         <strong>Parameters</strong>
                                         <ol>
                                             <li style="list-style: none; ">
-                                                <strong>Id Type/Identifier</strong>
+                                                <strong>Id Type</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>Enter a valid HGU133A probeset (2046224_at) or a HUGO gene symbol. If a gene symbol is entered the best available probeset will be identified using jetset<a href="link here"> Add link</a>
+                                                    <li>Type of identifiers being submitted. Either HGU133A probesets (2046224_at) or a HUGO gene symbol as input from a file below. If gene symbol is selected the best available probeset will be identified using jetset<a href="link here"> Add link</a>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>File</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>Text file with the first column containing the gene ids (Affy or Gene Symbol) and the second column indicating a positive effect (1) or a negative effect (-1) on the gene-set for each id. See this<a href="assets/GO_0046605_Symbol.txt"> Example</a>
+                                                    <li>Text file with the first column containing the gene ids (Affy or Gene Symbol). See this<a href="assets/GO_0046605_Symbol.txt"> Example</a>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>Months</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>The number of months to plot. This parameter does not currenlty alter the months for significance testing.</li>
+                                                    <li>The number of months to plot. This parameter does not currenlty alter significance testing.
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li style="list-style: none; ">
+                                                <strong>Label</strong>
+                                                <ul style="list-style: none; ">
+                                                    <li>Name to be used as the id for analysis.
+                                                    </li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>Subtype</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>Survival plots will be generated for each tumor subtype from the chose algorithm.</li>
+                                                    <li>Survival plots will be generated for each tumor subtype from the chosen algorithm. PAM50 or MOD.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>Split</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Method of splitting low and high groups. Median, Tertile or Quartile.
+                                                    </li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
-                                                <strong>Tamoxifen</strong>>
+                                                <strong>Tamoxifen</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Select patient cohort according to tamoxifen treatment. Yes, No or Compare across treatment.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>Chemo</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Select patient cohort according to chemo treatment. Yes or No.</li>
                                                 </ul>
                                             </li>
                                             <li style="list-style: none; ">
                                                 <strong>End Point</strong>
                                                 <ul style="list-style: none; ">
-                                                    <li>This parameter splits the data into high and low categories using either the median, tertile or quartile splits. Note that only the high and low of the extremes will be plotted and not all patient data will be used.</li>
+                                                    <li>Either Relapse-Free Survival (RFS), Distant-Metastasis Free Survival (DMFS), or the aggregate (RFS/DMFS).</li>
                                                 </ul>
                                             </li>
                                         </ol>
@@ -408,6 +417,7 @@
                                                 </ol>
                                             </li>
                                         </ol>
+                                    </li>
                                 </ul>
                                 <div class="col-lg-12">
                                     <section class="panel">
@@ -417,7 +427,7 @@
                                         </header>
                                         <div class="panel-body" style="display: block;">
 
-                                            <img src="assets/pics/myplots/GO_0046605_PAM50_any_any_median_Overall_Survival.jpg" width="600" height="354"></img>
+                                            <img src="assets/pics/myplots/GO_0046605_PAM50_any_any_median_combo_LumB_Survival.jpg" width="600" height="354"></img>
 
                                         </div>
                                     </section>
@@ -429,44 +439,47 @@
                                         </header>
                                         <div class="panel-body" style="display: block;">
 
-                                            <img src="assets/pics/myplots/GO_0046605_PAM50_any_any_median_combo_Overall_cindex.jpg" width="628" height="354"></img>
+                                            <img src="assets/pics/myplots/GO_0046605_PAM50_any_any_median_combo_LumB_cindex.jpg" width="296" height="303"></img>
 
                                         </div>
                                     </section>
                                 </div>
                             </div>
+
                         </section>
                     </div>
+
                 </div>
-                <!--wrapper end-->
-                <!-- InstanceEndEditable -->
-                <!--main content end-->
-                <!--footer start-->
-                <footer class="site-footer">
-                    <div class="text-center">
-                        2013 &copy; Gene Analytics | Duke University | McDonnell Lab | Jeff Jasper | Jasper1918@gmail.com
-                        <a href="#" class="go-top">
-                            <i class="icon-angle-up"></i>
-                        </a>
-                    </div>
-                </footer>
-                <!--footer end-->
             </section>
-            <!-- main-content end -->
+            <!--wrapper end-->
+            <!-- InstanceEndEditable -->
+            <!--main content end-->
+            <!--footer start-->
+            <footer class="site-footer">
+                <div class="text-center">
+                    2013 &copy; Gene Analytics | Duke University | McDonnell Lab | Jeff Jasper | Jasper1918@gmail.com
+                    <a href="#" class="go-top">
+                        <i class="icon-angle-up"></i>
+                    </a>
+                </div>
+            </footer>
+            <!--footer end-->
+        </section>
+        <!-- main-content end -->
 
-            <!-- js placed at the end of the document so the pages load faster -->
+        <!-- js placed at the end of the document so the pages load faster -->
 
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-            <script src="assets/js/jquery.scrollTo.min.js"></script>
-            <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-            <script src="assets/js/respond.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+        <script src="assets/js/respond.min.js"></script>
 
-            <!--common script for all pages-->
-            <script src="assets/js/common-scripts.js"></script>
+        <!--common script for all pages-->
+        <script src="assets/js/common-scripts.js"></script>
 
-            <!--script for this page only-->
-            <script src="assets/js/gritter.js" type="text/javascript"></script>
+        <!--script for this page only-->
+        <script src="assets/js/gritter.js" type="text/javascript"></script>
 
 
 </body>
