@@ -27,17 +27,17 @@ my $user_result_dir = "$RESULT_DIR/$user_id";
 
 if (! -e $RESULT_DIR) {
     if (!mkdir($RESULT_DIR)) {
-        print "<p>Can't create the result directory. Please check if your htdoc directory is correct. Probably you need to change the mode of the directory: chmod 777</p>"; 
+        print "<p>Can't create the result directory. Please check if your htdoc directory is correct. Probably you need to change the mode of the directory: chmod 777</p>";
         exit;
     }
     chmod (0777, $RESULT_DIR);
 }
 if (! -e $user_result_dir) {
     if (!mkdir($user_result_dir)) {
-        print "<p>Can't create the user's result directory. Please check if your htdoc directory is correct. Probably you need to change the mode of the directory: chmod 777</p>"; 
+        print "<p>Can't create the user's result directory. Please check if your htdoc directory is correct. Probably you need to change the mode of the directory: chmod 777</p>";
         exit;
     }
-    chmod (0777, $user_result_dir); 
+    chmod (0777, $user_result_dir);
 }
 
 print $query->header ( "text/html");
@@ -49,7 +49,7 @@ print start_html(
 print '<body>';
 my $Enrichment_CMD = "R  --vanilla --slave --args $id $idtype $subtype $enrich $user_result_dir< ../resources/scripts/BRCADB_2013_corrfxn_perl.R ";
 
-#Wait feature here 
+#Wait feature here
 print'<div id="cgicontainer">';
 print'<div id="overlay" class="spinbox" >';
 print'<div id="spindiv" class="spinner" >';
@@ -67,15 +67,15 @@ print '<script type="text/javascript">$("#spindiv").hide(500);</script>';
 print '<script type="text/javascript">$("#overlay").hide(500);</script>';
 #zip the files
    my $zip = Archive::Zip->new();
-   
+
    # Add a directory tree
-    $zip->addTree( $user_result_dir."/".$id."-"."Corr/", $id."-"."Corr", sub { -f && -r } );
-   
+    $zip->addTree( $user_result_dir."/".$id."-"."corr/", $id."-"."Corr", sub { -f && -r } );
+
    # Save the Zip file
    unless ( $zip->writeToFileNamed($user_result_dir."/".$id."-"."Corr.zip") == AZ_OK ) {
        die 'write error';
    }
-   
+
 print '<script type="text/javascript"> spin_stop();</script>';
 print "<p> Results Complete! </p>";
 my $end_time = time();
