@@ -1,4 +1,4 @@
-plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("hr", "ci"),chemo=c("any","yes", "no"), tam=c("any","yes","no","compare"), subtype=c("basal", "luma", "lumb", "her2", "normal"),surv_type=c("rfs","dmfs","combo"), results_dir){
+plotforest<-function(mysigfile, signame, idtype=c("symbol", "probe"), metric=c("hr", "ci"),chemo=c("any","yes", "no"), tam=c("any","yes","no"), subtype=c("basal", "luma", "lumb", "her2", "normal"),surv_type=c("rfs","dmfs","combo"), results_dir){
   
   #validation
   idtype <- match.arg(idtype)

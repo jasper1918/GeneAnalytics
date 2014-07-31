@@ -95,8 +95,9 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   adata<-merge(myidann, gdata, by.x=1, by.y=1)
   
   #ggplot heatmap
+  col1<- colorRampPalette(c("ivory","yellow", "red", "black"))
   base <- (ggplot(adata, aes(Subtype, Symbol)) + geom_tile(aes(fill = value),color = "black") 
-           + scale_fill_gradient(low = "white",high = "red"))
+           + scale_fill_gradientn(colours=col1(200)))
   myheatmap<- base + theme_bw() + theme(axis.text  = element_text(size = rel(1.5)),axis.text.y = element_text(size=rel(.8)))+labs(title = "",x = "", y="") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
   fname<-paste(signame,"_",subtype, "_Heatmap_ggplot.pdf",sep="")
   ggsave(plot=myheatmap,filename=fname, dpi=320, width=8, height=12)
@@ -106,10 +107,9 @@ plotheatmap<-function(mysigfile, signame, idtype=c("symbol", "probe"), subtype=c
   require(RColorBrewer)
   
   mydistman= function(x) dist(x,method = 'manhattan')
-  
-  mycol2<- colorpanel(29,"gray90","red")
-  my.breaks <- c(seq(4, 6, length.out=10),seq(6, 8),seq(8,12, length.out=10))
+  col1<- colorRampPalette(c("ivory","yellow",  "red", "black"))
+  #my.breaks <- c(seq(4, 6, length.out=51),seq(6, 7, length.out=50),seq(7, 8, length.out=50),seq(8,9, length.out=50),seq(12,14, length.out=50))
   pdf(file=paste(signame,"_", subtype,"_Heatmap_clustered.pdf", sep=""),width=10, height=12)
-  rmheat<-heatmap.2(cadata, trace="none", dendrogram="both", col=mycol2,Rowv=TRUE, Colv=TRUE, main="", symbreaks=F, scale= "none",margins=c(15,10), cexRow=1, cexCol=1.5, labRow=row.names(cadata),distfun=mydistman,density.info="none", keysize=1)
+  rmheat<-heatmap.2(cadata, trace="none", dendrogram="both",col=col1(250),Rowv=TRUE, Colv=TRUE, main="", symbreaks=F, scale= "none",margins=c(15,10), cexRow=1, cexCol=1.5, labRow=row.names(cadata),distfun=mydistman,density.info="none", keysize=1)
   graphics.off() 
 }

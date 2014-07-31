@@ -1,9 +1,9 @@
-
 docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2"),enrich=c("yes","no"),results_dir) {
 	#Function to correlate gene expression. 
 	#Jeff S Jasper, jasper1918@gmail.com
 
   load("../resources/external/BRCADB_final_2013_Data.RData")
+  load("../resources/data/GSEA_C2_list.R.RData")
   clin<-read.table("../resources/data/BRCADB_2013_Clinical.txt", sep="\t", header=T)
 
   #validate args
@@ -44,7 +44,7 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
                         myrow<-5 }#mod2
   
   #overall corr
-  cat("Doing:", "Overall","\n")
+  cat("Doing Coexpression:", "Overall","\n")
   overallcorr<-cor(brcadbdata[,1:ncol(brcadbdata)],brcadbdata[,probe],use='p')
 
   #subtype corr
@@ -94,15 +94,16 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   #plot overall each end
   cat(", Plotting Correlation","\n")
   require(corrplot)
+  require(scales)
   sptotdata<-t(exprs(myesetann[rownames(sptot),]))
   sptotdatacorr<-cor(sptotdata,method="spearman")
   myrowsym<- unlist(mget(rownames(sptotdatacorr),hgu133aSYMBOL))
   rownames(sptotdatacorr)<-make.names(myrowsym, unique=T)
   mycolsym<- unlist(mget(colnames(sptotdatacorr),hgu133aSYMBOL))
   colnames(sptotdatacorr)<-make.names(mycolsym, unique=T)
-  col3 <- colorRampPalette(c("midnightblue", "white", "red"))
+  rcol2 <- colorRampPalette(rev(c("#67001F", "#B2182B", "#D6604D", "#F4A582", "#FDDBC7","#FFFFFF", "#D1E5F0", "#92C5DE", "#4393C3", "#2166AC", "#053061")))
   pdf(file=paste(symbol,"-",subtype,"_OverallCorrplot.pdf", sep=""),width=10.5, height=8)
-  corrplot(sptotdatacorr, is.corr = T, method = "square",order="hclust", hclust.method="ward",addrect=6, col=col3(20), tl.col="black",, tl.cex=.4,rect.lwd=3)
+  corrplot(sptotdatacorr, is.corr = T, method = "square",order="hclust", hclust.method="ward", col=rcol2(200), tl.col="black", tl.cex=.4,rect.lwd=3)
   graphics.off()
   
   #plot top 
@@ -112,9 +113,10 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   rownames(spupdatacorr)<-make.names(myrowsym, unique=T)
   mycolsym<- unlist(mget(colnames(spupdatacorr),hgu133aSYMBOL))
   colnames(spupdatacorr)<-make.names(mycolsym, unique=T)
-  col3 <- colorRampPalette(c("midnightblue", "white", "red"))
+  spupdatacorr<-rescale(spupdatacorr, to=c(0,1), from=range(spupdatacorr, na.rm=TRUE))
+  rcol2 <- colorRampPalette(rev(c("#67001F", "#B2182B", "#D6604D", "#F4A582", "#FDDBC7","#FFFFFF", "#D1E5F0", "#92C5DE", "#4393C3", "#2166AC", "#053061")))
   pdf(file=paste(symbol,"-",subtype,"_TopUpCorrplot.pdf", sep=""),width=10.5, height=8)
-  corrplot(spupdatacorr, is.corr = T, method = "square",order="hclust", hclust.method="ward",addrect=6, col=col3(30), tl.col="black",, tl.cex=.9,rect.lwd=3)
+  corrplot(spupdatacorr, is.corr = T, method = "square",order="hclust", hclust.method="ward",col=rcol2(50), tl.col="black", tl.cex=.9,rect.lwd=3,cl.lim=c(0,1))
   graphics.off()
   
   #plot bottom
@@ -124,9 +126,10 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   rownames(spdndatacorr)<-make.names(myrowsym, unique=T)
   mycolsym<- unlist(mget(colnames(spdndatacorr),hgu133aSYMBOL))
   colnames(spdndatacorr)<-make.names(mycolsym, unique=T)
-  col3 <- colorRampPalette(c("red", "white", "midnightblue"))
+  spdndatacorr<-rescale(spdndatacorr, to=c(0,1), from=range(spdndatacorr, na.rm=TRUE))
+  col2 <- colorRampPalette(c("#67001F", "#B2182B", "#D6604D", "#F4A582", "#FDDBC7","#FFFFFF", "#D1E5F0", "#92C5DE", "#4393C3", "#2166AC", "#053061"))
   pdf(file=paste(symbol,"-",subtype,"_TopDnCorrplot.pdf", sep=""),width=10.5, height=8)
-  corrplot(spdndatacorr, is.corr = T, method = "square",order="hclust", hclust.method="ward",addrect=6, col=col3(30), tl.col="black",, tl.cex=.9,rect.lwd=3)
+  corrplot(spdndatacorr, is.corr = T, method = "square",order="hclust", hclust.method="ward", col=col2(50),tl.col="black", tl.cex=.9,rect.lwd=3,cl.lim=c(0,1))
   graphics.off()
   
   #plot network graph
@@ -167,62 +170,63 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
     graphics.off()
   
   #do enrichment c2 GSEA
-    cat(", Doing Enrichment","\n")
-    require(gage)
-    load("../resources/data/GSEA_C2_list.R.RData")
+  if (enrich=="yes"){
+      cat(", Doing Enrichment","\n")
+      require(gage)
+    
+      mydata<-allcorr_annot[,c(3,6)]
+      mydata<-na.omit(mydata)
+      cordata<-mydata[,2]
+      names(cordata)<-mydata[,1]
+      corr_up <- names(cordata)[cordata > 0.4]
+      corr_dn<-names(cordata)[cordata < -0.4]
+      
+      c2_gage <- gage(cordata, gsets = c2.eg, ref = NULL, samp = NULL,rank.test=T, same.dir=T)
+      c2_gage$greater[1:20,]
+      c2.sigsets_up <- subset(c2_gage$greater, c2_gage$greater[, "q.val"] < .05 )
+      c2.sigsets_up
+      write.table(c2.sigsets_up, paste(symbol,"-",subtype,"_GSEA_C2_Up.txt", sep=""), sep="\t", col.names=NA)
+      c2.sigsets_dn <- subset(c2_gage$less, c2_gage$less[, "q.val"] < .05 )
+      c2.sigsets_dn
+      write.table(c2.sigsets_dn, paste(symbol,"-",subtype,"_GSEA_C2_Dn.txt", sep=""), sep="\t", col.names=NA)
+    
+    #plot graphs for subtyes
+      cat(", Plotting Networks","\n")
+    for(i in 1:length(setlist) ){
+      subcor<-allcorr_annot[,c(4,(6+i))]
+      avgcor<-aggregate(subcor[,2], by=list(subcor[,1]), FUN=mean)
+      rownames(avgcor)<-avgcor[,1]
+      sort_avgcor <-avgcor[order(-avgcor[,2]), ]
+      top_cor<-sort_avgcor[1:50, 1:2]
+      top_cor$from<-symbol
+      final_cor<-as.data.frame(top_cor[,c(3,1,2)])
+      
+      colnames(final_cor)<-c("From", "To", "strength")
+      unique.genes<-data.frame(name=unique(final_cor[,2]))
+      
+      require(igraph)
+      final_cor$strength=final_cor$strength * 10
+      g <- graph.data.frame(final_cor, directed=TRUE, vertices=unique.genes)
+      
+      require(RColorBrewer)
+      set.seed(1919)
+      the.layout = layout.fruchterman.reingold(g, weights=E(g)$strength, coolexp=3, area=vcount(g)^2.3, repulserad=vcount(g)^3)[match(V(g)$name, V(g)$name),]
+      #the.layout = layout.kamada.kawai(g)
+      v.colors = brewer.pal(9,"YlOrRd") #YlGnBu or YlOrRd
+      v.col = v.colors[cut(E(g)$strength,c(1,3,quantile(E(g)$strength,probs=seq(.3,1,length=7))),labels=F)][match(V(g)$name, V(g)$name)]
   
-    mydata<-allcorr_annot[,c(3,6)]
-    mydata<-na.omit(mydata)
-    cordata<-mydata[,2]
-    names(cordata)<-mydata[,1]
-    corr_up <- names(cordata)[cordata > 0.4]
-    corr_dn<-names(cordata)[cordata < -0.4]
-    
-    c2_gage <- gage(cordata, gsets = c2.eg, ref = NULL, samp = NULL,rank.test=T, same.dir=T)
-    c2_gage$greater[1:20,]
-    c2.sigsets_up <- subset(c2_gage$greater, c2_gage$greater[, "q.val"] < .05 )
-    c2.sigsets_up
-    write.table(c2.sigsets_up, paste(symbol,"-",subtype,"_GSEA_C2_Up.txt", sep=""), sep="\t", col.names=NA)
-    c2.sigsets_dn <- subset(c2_gage$less, c2_gage$less[, "q.val"] < .05 )
-    c2.sigsets_dn
-    write.table(c2.sigsets_dn, paste(symbol,"-",subtype,"_GSEA_C2_Dn.txt", sep=""), sep="\t", col.names=NA)
-  
-  #plot graphs for subtyes
-  for(i in 1:length(setlist) ){
-    cat(", Plotting Network","\n")
-    subcor<-allcorr_annot[,c(4,(6+i))]
-    avgcor<-aggregate(subcor[,2], by=list(subcor[,1]), FUN=mean)
-    rownames(avgcor)<-avgcor[,1]
-    sort_avgcor <-avgcor[order(-avgcor[,2]), ]
-    top_cor<-sort_avgcor[1:50, 1:2]
-    top_cor$from<-symbol
-    final_cor<-as.data.frame(top_cor[,c(3,1,2)])
-    
-    colnames(final_cor)<-c("From", "To", "strength")
-    unique.genes<-data.frame(name=unique(final_cor[,2]))
-    
-    require(igraph)
-    final_cor$strength=final_cor$strength * 10
-    g <- graph.data.frame(final_cor, directed=TRUE, vertices=unique.genes)
-    
-    require(RColorBrewer)
-    set.seed(1919)
-    the.layout = layout.fruchterman.reingold(g, weights=E(g)$strength, coolexp=3, area=vcount(g)^2.3, repulserad=vcount(g)^3)[match(V(g)$name, V(g)$name),]
-    #the.layout = layout.kamada.kawai(g)
-    v.colors = brewer.pal(9,"YlOrRd") #YlGnBu or YlOrRd
-    v.col = v.colors[cut(E(g)$strength,c(1,3,quantile(E(g)$strength,probs=seq(.3,1,length=7))),labels=F)][match(V(g)$name, V(g)$name)]
-
-    l.size <-2 * E(g)$strength / max(E(g)$strength)+.2
-    v.size <-25 * E(g)$strength / max(E(g)$strength)+10
-    
-    h<-simplify(g,remove.multiple=F,remove.loops=T)
-    par(mar=c(0,0,0,0))
-    pdf(file=paste(symbol,"-",subtype,"_NetworkPlot_",setlist[i],".pdf", sep=""),width=19, height=19)
-    plot(h, layout=the.layout, vertex.size=v.size, vertex.color=v.col, vertex.frame.color=NA, edge.color="grey40",
-         vertex.label=V(h)$name, vertex.label.font=2, vertex.label.color="black",
-         edge.width=E(h)$strength, edge.arrow.size=.2, vertex.label.cex=l.size)
-    graphics.off()
-    
+      l.size <-2 * E(g)$strength / max(E(g)$strength)+.2
+      v.size <-25 * E(g)$strength / max(E(g)$strength)+10
+      
+      h<-simplify(g,remove.multiple=F,remove.loops=T)
+      par(mar=c(0,0,0,0))
+      pdf(file=paste(symbol,"-",subtype,"_NetworkPlot_",setlist[i],".pdf", sep=""),width=19, height=19)
+      plot(h, layout=the.layout, vertex.size=v.size, vertex.color=v.col, vertex.frame.color=NA, edge.color="grey40",
+           vertex.label=V(h)$name, vertex.label.font=2, vertex.label.color="black",
+           edge.width=E(h)$strength, edge.arrow.size=.2, vertex.label.cex=l.size)
+      graphics.off()
+      
+    }
   }
   
 }

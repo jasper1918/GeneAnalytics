@@ -54,7 +54,7 @@ print'<div id="cgicontainer">';
 print'<div id="overlay" class="spinbox" >';
 print'<div id="spindiv" class="spinner" >';
 print "<p>  Generating Data Now...</p>";
-print "<p>  This may take a couple minutes.</p>";
+print "<p>  This may take a minute.</p>";
 
 print'</div>';
 print'</div>';
