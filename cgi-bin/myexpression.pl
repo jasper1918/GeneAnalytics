@@ -39,7 +39,7 @@ if (! -e $user_result_dir) {
     chmod (0777, $user_result_dir); 
 }
 
-print $query->header ( "text/html",'200 OK');
+print $query->header(-type => 'text/html',-charset => 'utf-8');
 print start_html(
         -title   => 'Results',
         -author  => 'jasper1918@gmail.com',
