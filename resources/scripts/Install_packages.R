@@ -15,4 +15,6 @@ if(!require(RSQLite))   { biocLite("RSQLite",lib='/usr/local/lib/R/site-library'
 if(!require(survcomp))   { biocLite("survcomp",lib='/usr/local/lib/R/site-library')}
 if(!require(survival))   { biocLite("survival",lib='/usr/local/lib/R/site-library')}
 
-if(!require(jetset))   { cat("Install Jetset")}
+if(!require(jetset))   { cat("Installing Jetset")
+install.packages("~/mygit/gene_analytics/resources/scripts/jetset_2.14.0.tar.gz", repos = NULL, lib='/usr/local/lib/R/site-library', type = "source")
+}
