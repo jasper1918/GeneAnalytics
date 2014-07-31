@@ -33,7 +33,7 @@ plotkmsig<-function(mysigfiledn,idtype=c("symbol", "probe"),signame,months,subty
   } else {stop("Please define id and idtype.")
   }
   #validate scores exist
-  if (dim(mysigfiledn)[[2]]!=2){
+  if (dim(mysigfiledn)[[2]] < 2){
     stop("Please check file format. Stopping.")
   }
 
