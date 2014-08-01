@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="760px" height="750.58px" viewBox="0 0 760 750.58" enable-background="new 0 0 760 750.58" xml:space="preserve">
+<line fill="#231F20" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="448.88" y1="280.64" x2="496.34" y2="220.61"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="417.88" y1="361" x2="422.3" y2="411.62"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="387.3" y1="280.64" x2="370.99" y2="233.47"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="370.99" y1="324.35" x2="292.23" y2="333.13"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="370.99" y1="353.09" x2="272.42" y2="477.48"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="452.96" y1="332.47" x2="545.2" y2="405.64"/>
+<g>
+	<circle opacity="0.2" fill="#ED1C24" stroke="#000000" stroke-miterlimit="10" cx="353.1" cy="181.19" r="55.24"/>
+	<text transform="matrix(1 0 0 1 313.8916 185.9478)" font-family="'ArialRoundedMTBold'" font-size="14.5683">Expression</text>
+</g>
+<g>
+	<circle opacity="0.2" fill="#F68B1F" stroke="#000000" stroke-miterlimit="10" cx="237" cy="328.5" r="55.24"/>
+	<text transform="matrix(1 0 0 1 205.1768 333.2534)" font-family="'ArialRoundedMTBold'" font-size="14.5683">Heatmap</text>
+</g>
+<g>
+	<circle opacity="0.2" fill="#B72467" stroke="#000000" stroke-miterlimit="10" cx="545.2" cy="192.94" r="55.24"/>
+	<text transform="matrix(1 0 0 1 508.0146 188.9565)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="14.5683">Functional</tspan><tspan x="-14.43" y="17.48" font-family="'ArialRoundedMTBold'" font-size="14.5683">Co-Expression</tspan></text>
+</g>
+<g>
+	<circle opacity="0.2" fill="#00A651" stroke="#000000" stroke-miterlimit="10" cx="245.49" cy="525.72" r="55.24"/>
+	<text transform="matrix(1 0 0 1 215.0518 521.7339)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="14.5683">Survival </tspan><tspan x="0.68" y="17.48" font-family="'ArialRoundedMTBold'" font-size="14.5683">Analysis</tspan></text>
+</g>
+<g>
+	<circle opacity="0.2" fill="#00ABBD" stroke="#000000" stroke-miterlimit="10" cx="422.3" cy="466.85" r="55.24"/>
+	<text transform="matrix(1 0 0 1 389.1357 452.3882)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="14.5683">Gene-Set</tspan><tspan x="4.4" y="17.48" font-family="'ArialRoundedMTBold'" font-size="14.5683">Survival</tspan><tspan x="3.26" y="34.96" font-family="'ArialRoundedMTBold'" font-size="14.5683">Analysis</tspan></text>
+</g>
+<circle opacity="0.2" fill="#524FA1" stroke="#FFFFFF" stroke-miterlimit="10" cx="587.17" cy="441.55" r="55.24"/>
+<text transform="matrix(1 0 0 1 550.3652 446.3052)" fill="#231F20" font-family="'ArialRoundedMTBold'" font-size="14.5683">ForestPlot</text>
+<g>
+	<path fill="#F5F5F7" stroke="#000000" stroke-miterlimit="10" d="M478.11,363.16c0,4.02-3.26,7.28-7.28,7.28h-112.1
+		c-4.02,0-7.28-3.26-7.28-7.28v-84.95c0-4.02,3.26-7.28,7.28-7.28h112.1c4.02,0,7.28,3.26,7.28,7.28V363.16z"/>
+	<text transform="matrix(1 0 0 1 371.6982 336.979)"><tspan x="0" y="0" font-family="'Verdana'" font-size="59.0508">G</tspan><tspan x="45.79" y="0" fill="#FF6C60" font-family="'Verdana'" font-size="59.0508">A</tspan></text>
+	<text transform="matrix(1 0 0 1 378.4619 350.187)" font-family="'Verdana'" font-size="10.2953">Breast Cancer</text>
+</g>
+</svg>
