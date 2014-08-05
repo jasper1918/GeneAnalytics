@@ -184,11 +184,25 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
       c2_gage <- gage(cordata, gsets = c2.eg, ref = NULL, samp = NULL,rank.test=T, same.dir=T)
       c2_gage$greater[1:20,]
       c2.sigsets_up <- subset(c2_gage$greater, c2_gage$greater[, "q.val"] < .05 )
-      c2.sigsets_up
       write.table(c2.sigsets_up, paste(symbol,"-",subtype,"_GSEA_C2_Up.txt", sep=""), sep="\t", col.names=NA)
       c2.sigsets_dn <- subset(c2_gage$less, c2_gage$less[, "q.val"] < .05 )
-      c2.sigsets_dn
       write.table(c2.sigsets_dn, paste(symbol,"-",subtype,"_GSEA_C2_Dn.txt", sep=""), sep="\t", col.names=NA)
+      
+      library(ggplot2)
+      if(dim(c2.sigsets_up)[1]>20){
+        c2_up<-data.frame(c2.sigsets_up[1:20,])
+        c2_up$name<-rownames(c2_up)
+        myplot_up <- ggplot(c2_up,aes(reorder(name, stat.mean, FUN= median), y=stat.mean,fill=set.size)) + coord_flip() + geom_bar(stat="identity") + scale_fill_continuous()
+        myplot2_up<-myplot_up + xlab("") + ylab("Enrichment") +  theme_bw(base_size = 16) + theme(axis.text.x = element_text(angle =0, hjust = 0))
+        ggsave(plot=myplot2_up, filename=paste(symbol,"-",subtype,"_GSEA_C2_Up.pdf", sep=""),width = 10, height=9, unit="in")
+      }
+      if(dim(c2.sigsets_dn)[1]>20){
+        c2_dn<-data.frame(c2.sigsets_dn[1:20,])
+        c2_dn$name<-rownames(c2_dn)
+        myplot_dn <- ggplot(c2_dn,aes(reorder(name, stat.mean, FUN= median), y=stat.mean,fill=set.size)) + coord_flip() + geom_bar(stat="identity") + scale_fill_continuous()
+        myplot2_dn<-myplot_dn + xlab("") + ylab("Enrichment") +  theme_bw(base_size = 16) + theme(axis.text.x = element_text(angle =0, hjust = 0))
+        ggsave(plot=myplot2_dn, filename=paste(symbol,"-",subtype,"_GSEA_C2_Dn.pdf", sep=""),width = 10, height=9, unit="in")
+      }
     
     #plot graphs for subtyes
       cat(", Plotting Networks","\n")
@@ -230,6 +244,3 @@ docorr<-function(id,idtype=c("symbol", "probe"),subtype=c("PAM50", "MOD1", "MOD2
   }
   
 }
-
-
-
