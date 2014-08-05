@@ -2,39 +2,82 @@
 <!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="760px" height="750.58px" viewBox="0 0 760 750.58" enable-background="new 0 0 760 750.58" xml:space="preserve">
-<line fill="#231F20" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="448.88" y1="280.64" x2="496.34" y2="220.61"/>
-<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="417.88" y1="361" x2="422.3" y2="411.62"/>
-<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="387.3" y1="280.64" x2="370.99" y2="233.47"/>
-<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="370.99" y1="324.35" x2="292.23" y2="333.13"/>
-<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="370.99" y1="353.09" x2="272.42" y2="477.48"/>
-<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="452.96" y1="332.47" x2="545.2" y2="405.64"/>
+	 width="800px" height="1100px" viewBox="0 0 760 750.58" enable-background="new 0 0 760 750.58" xml:space="preserve">
+
+<script type="text/ecmascript"> 
+  <![CDATA[ 
+    function Init(evt) 
+    { 
+       RemoveWhiteSpaceChildNodesOf(evt.target.ownerDocument.documentElement); 
+    } 
+    function Highlight(evt) 
+    { 
+       evt.target.setAttribute("opacity", "1"); 
+       
+    } 
+    function Unhighlight(evt) 
+    { 
+       evt.target.setAttribute("opacity", ".4"); 
+       
+    } 
+  ]]> 
+  </script> 
+  
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="440.56" y1="255.34" x2="518.75" y2="156.45"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="389.49" y1="387.72" x2="396.77" y2="471.11"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="339.11" y1="255.34" x2="312.25" y2="177.62"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="312.25" y1="327.35" x2="182.5" y2="341.8"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="312.25" y1="374.69" x2="149.86" y2="579.61"/>
+<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="447.29" y1="340.72" x2="599.23" y2="461.26"/>
+
+
 <g>
-	<circle opacity="0.2" fill="#ED1C24" stroke="#000000" stroke-miterlimit="10" cx="353.1" cy="181.19" r="55.24"/>
-	<text transform="matrix(1 0 0 1 313.8916 185.9478)" font-family="'ArialRoundedMTBold'" font-size="14.5683">Expression</text>
+	<path fill="#F5F5F7" stroke="#000000" stroke-miterlimit="10" d="M488.71,391.27c0,6.63-5.37,12-12,12H292.05
+		c-6.63,0-12-5.37-12-12V251.33c0-6.63,5.37-12,12-12h184.67c6.63,0,12,5.37,12,12V391.27z"/>
+	<text transform="matrix(1 0 0 1 313.4131 348.1479)"><tspan x="0" y="0" font-family="'Verdana'" font-size="97.281">G</tspan><tspan x="75.43" y="0" fill="#FF6C60" font-family="'Verdana'" font-size="97.281">A</tspan></text>
+	<text transform="matrix(1 0 0 1 324.5542 369.9058)" font-family="'Verdana'" font-size="16.9607">Breast Cancer</text>
 </g>
+
+<a target="_parent" xlink:href="../../../Expression.html" >
+	<g>
+		<circle id="expression_circle" opacity=".4" fill="#ED1C24" stroke="#000000" stroke-miterlimit="10" cx="282.78" cy="91.5" r="91" onmouseover="Highlight(evt);" onmouseout="Unhighlight(evt);"> <set attributeName="opacity" to="1" begin="expression_text.mouseover" end="expression_text.mouseout"/> </circle>
+		<text id="expression_text" transform="matrix(1 0 0 1 218.1792 99.3364)" font-family="'ArialRoundedMTBold'" font-size="24" >Expression</text>
+	</g>
+</a>
+
+<a target="_parent" xlink:href="../../../Heatmap.html" >
 <g>
-	<circle opacity="0.2" fill="#F68B1F" stroke="#000000" stroke-miterlimit="10" cx="237" cy="328.5" r="55.24"/>
-	<text transform="matrix(1 0 0 1 205.1768 333.2534)" font-family="'ArialRoundedMTBold'" font-size="14.5683">Heatmap</text>
+	<circle id="heatmap_circle" opacity=".4" fill="#F68B1F" stroke="#000000" stroke-miterlimit="10" cx="91.5" cy="334.17" r="91" onmouseover="Highlight(evt);" onmouseout="Unhighlight(evt);"> <set attributeName="opacity" to="1" begin="heatmap_text.mouseover" end="heatmap_text.mouseout"/> </circle>
+	<text id="heatmap_text" transform="matrix(1 0 0 1 39.082 342.0103)" font-family="'ArialRoundedMTBold'" font-size="24">Heatmap</text>
 </g>
+</a>
+
+<a target="_parent" xlink:href="../../../Correlation.html" >
 <g>
-	<circle opacity="0.2" fill="#B72467" stroke="#000000" stroke-miterlimit="10" cx="545.2" cy="192.94" r="55.24"/>
-	<text transform="matrix(1 0 0 1 508.0146 188.9565)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="14.5683">Functional</tspan><tspan x="-14.43" y="17.48" font-family="'ArialRoundedMTBold'" font-size="14.5683">Co-Expression</tspan></text>
+	<circle id="corr_circle" opacity=".4" fill="#B72467" stroke="#000000" stroke-miterlimit="10" cx="599.23" cy="110.86" r="91" onmouseover="Highlight(evt);" onmouseout="Unhighlight(evt);"><set attributeName="opacity" to="1" begin="corr_text.mouseover" end="corr_text.mouseout"/> </circle>
+	<text id="corr_text" transform="matrix(1 0 0 1 537.9805 104.293)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="24">Functional</tspan><tspan x="-23.77" y="28.8" font-family="'ArialRoundedMTBold'" font-size="24">Co-Expression</tspan></text>
 </g>
+</a>
+
+<a target="_parent" xlink:href="../../../Surv.html" >
 <g>
-	<circle opacity="0.2" fill="#00A651" stroke="#000000" stroke-miterlimit="10" cx="245.49" cy="525.72" r="55.24"/>
-	<text transform="matrix(1 0 0 1 215.0518 521.7339)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="14.5683">Survival </tspan><tspan x="0.68" y="17.48" font-family="'ArialRoundedMTBold'" font-size="14.5683">Analysis</tspan></text>
+	<circle id="surv_circle" opacity=".4" fill="#00A651" stroke="#000000" stroke-miterlimit="10" cx="105.5" cy="659.08" r="91" onmouseover="Highlight(evt);" onmouseout="Unhighlight(evt);"><set attributeName="opacity" to="1" begin="surv_text.mouseover" end="surv_text.mouseout"/> </circle>
+	<text id="surv_text" transform="matrix(1 0 0 1 55.3496 652.5151)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="24">Survival </tspan><tspan x="1.12" y="28.8" font-family="'ArialRoundedMTBold'" font-size="24">Analysis</tspan></text>
 </g>
+</a>
+
+<a target="_parent" xlink:href="../../../Surv_sig.html" >
 <g>
-	<circle opacity="0.2" fill="#00ABBD" stroke="#000000" stroke-miterlimit="10" cx="422.3" cy="466.85" r="55.24"/>
-	<text transform="matrix(1 0 0 1 389.1357 452.3882)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="14.5683">Gene-Set</tspan><tspan x="4.4" y="17.48" font-family="'ArialRoundedMTBold'" font-size="14.5683">Survival</tspan><tspan x="3.26" y="34.96" font-family="'ArialRoundedMTBold'" font-size="14.5683">Analysis</tspan></text>
+	<circle id="survsig_circle" opacity=".4" fill="#00ABBD" stroke="#000000" stroke-miterlimit="10" cx="396.77" cy="562.11" r="91" onmouseover="Highlight(evt);" onmouseout="Unhighlight(evt);"><set attributeName="opacity" to="1" begin="survsig_text.mouseover" end="survsig_text.mouseout"/> </circle>
+	<text id="survsig_text"  transform="matrix(1 0 0 1 342.1377 538.2749)"><tspan x="0" y="0" font-family="'ArialRoundedMTBold'" font-size="24">Gene-Set</tspan><tspan x="7.24" y="28.8" font-family="'ArialRoundedMTBold'" font-size="24">Survival</tspan><tspan x="5.37" y="57.6" font-family="'ArialRoundedMTBold'" font-size="24">Analysis</tspan></text>
 </g>
-<circle opacity="0.2" fill="#524FA1" stroke="#FFFFFF" stroke-miterlimit="10" cx="587.17" cy="441.55" r="55.24"/>
-<text transform="matrix(1 0 0 1 550.3652 446.3052)" fill="#231F20" font-family="'ArialRoundedMTBold'" font-size="14.5683">ForestPlot</text>
+</a>
+
+<a target="_parent" xlink:href="../../../ForestPlot.html" >
 <g>
-	<path fill="#F5F5F7" stroke="#000000" stroke-miterlimit="10" d="M478.11,363.16c0,4.02-3.26,7.28-7.28,7.28h-112.1
-		c-4.02,0-7.28-3.26-7.28-7.28v-84.95c0-4.02,3.26-7.28,7.28-7.28h112.1c4.02,0,7.28,3.26,7.28,7.28V363.16z"/>
-	<text transform="matrix(1 0 0 1 371.6982 336.979)"><tspan x="0" y="0" font-family="'Verdana'" font-size="59.0508">G</tspan><tspan x="45.79" y="0" fill="#FF6C60" font-family="'Verdana'" font-size="59.0508">A</tspan></text>
-	<text transform="matrix(1 0 0 1 378.4619 350.187)" font-family="'Verdana'" font-size="10.2953">Breast Cancer</text>
+	<circle id="forest_circle" opacity=".4" fill="#524FA1" stroke="#000000" stroke-miterlimit="10" cx="668.38" cy="520.42" r="91" onmouseover="Highlight(evt);" onmouseout="Unhighlight(evt);"><set attributeName="opacity" to="1" begin="forest_text.mouseover" end="forest_text.mouseout"/> </circle>
+	<text id="forest_text" transform="matrix(1 0 0 1 607.75 528.2524)" fill="#231F20" font-family="'ArialRoundedMTBold'" font-size="24">ForestPlot</text>
 </g>
+</a>
+
 </svg>
