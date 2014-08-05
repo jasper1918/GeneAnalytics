@@ -18,7 +18,7 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet" />
-     
+
 
     <!-- InstanceBeginEditable name="EditRegion3" -->
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
@@ -32,10 +32,26 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-51553650-1', 'auto');
+    ga('send', 'pageview');
+    </script>
 </head>
 
 <body>
-<!-- GoogleTRacking -->
+    <!-- GoogleTRacking -->
     <?php include_once( "analyticstracking.php") ?>
     <section id="container" class="">
         <!--header start-->
@@ -141,10 +157,10 @@
                             <li><a href="http://primerbot.duhs.duke.edu/">Primerbot</a>
                             </li>
                             <li><a href="http://www.biomedcentral.com/1471-2105/12/474">Jetset</a>
-                            <li><a href="http://www.ncbi.nlm.nih.gov/geo/">GEO</a>
-                            </li>
+                                <li><a href="http://www.ncbi.nlm.nih.gov/geo/">GEO</a>
+                                </li>
                         </ul>
-                    </li>
+                        </li>
 
 
 
@@ -158,7 +174,7 @@
         <!-- InstanceBeginEditable name="EditRegion1" -->
         <section id="main-content">
             <section class="wrapper">
-                <div class="col-lg-10 col-lg-offset-1" > 
+                <div class="col-lg-10 col-lg-offset-1">
                     <object data="assets/pics/myplots/GA_Front.svg" type="image/svg+xml" width="70%" height="70%"></object>
                 </div>
             </section>
